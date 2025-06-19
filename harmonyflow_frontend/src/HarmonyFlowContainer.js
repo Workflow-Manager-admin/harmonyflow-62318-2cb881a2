@@ -101,8 +101,72 @@ const FEATURE_PAGES = [
  * List of nav links in a flex grid for even spacing.
  * Sticks to modern, light-dashboard design: accent color for logo, clean hover/active.
  */
+/**
+ * NavBar component - Categorized drop-down navigation for major features.
+ */
 function NavBar() {
   const route = useLocation();
+
+  // Define nav categories: Each has a label, icon, and array of items.
+  const NAV_CATEGORIES = [
+    {
+      label: "Core",
+      icon: "🏠",
+      items: [
+        FEATURE_PAGES[0], // Dashboard 
+      ],
+    },
+    {
+      label: "Personal Growth",
+      icon: "🌿",
+      items: [
+        FEATURE_PAGES[1], // Spin the Compass
+        FEATURE_PAGES[6], // Creativity Capsules
+        FEATURE_PAGES[10], // Challenge Capsules
+        FEATURE_PAGES[8], // Emergency Detox
+        FEATURE_PAGES[3], // Global Impact
+      ],
+    },
+    {
+      label: "Community & Social",
+      icon: "🤝",
+      items: [
+        FEATURE_PAGES[2], // Local Tribes
+        FEATURE_PAGES[9], // Biz Partners
+        FEATURE_PAGES[4], // Tournaments
+        FEATURE_PAGES[5], // Story Circles
+      ],
+    },
+    {
+      label: "Wellness & Self",
+      icon: "🧘",
+      items: [
+        FEATURE_PAGES[7], // Mood-Reflector AI
+      ],
+    }
+  ];
+
+  // Navbar styling + drop-down logic
+  const [openCat, setOpenCat] = React.useState(null);
+
+  // Handle click outside for dropdown close
+  React.useEffect(() => {
+    function handler(e) {
+      if (!e.target.closest(".nav-dropdown")) setOpenCat(null);
+    }
+    if (openCat !== null)
+      document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [openCat]);
+
+  // Determines if a navitem should appear active.
+  function isItemActive(item) {
+    return (
+      route.pathname === item.path ||
+      (item.path === "/" && route.pathname === "/")
+    );
+  }
+
   return (
     <nav
       className="navbar"
@@ -131,6 +195,7 @@ function NavBar() {
           height: "var(--navbar-height)",
         }}
       >
+        {/* Logo */}
         <div
           className="logo"
           style={{
@@ -157,6 +222,7 @@ function NavBar() {
           </span>
           HarmonyFlow
         </div>
+        {/* CATEGORIES - Drop-down Menus */}
         <div
           style={{
             display: "flex",
@@ -165,42 +231,149 @@ function NavBar() {
             flexWrap: "wrap",
           }}
         >
-          {FEATURE_PAGES.map((tab, i) => (
-            <Link
-              key={tab.key}
-              to={tab.path}
-              style={{
-                textDecoration: "none",
-                color:
-                  route.pathname === tab.path ||
-                  (tab.path === "/" && route.pathname === "/")
-                    ? "#fff"
-                    : "#e6e9ee",
-                background:
-                  route.pathname === tab.path ||
-                  (tab.path === "/" && route.pathname === "/")
-                    ? "var(--secondary)"
-                    : "transparent",
-                padding: "8px 18px",
-                margin: "0 0 0 2px",
-                borderRadius: "7px",
-                fontWeight: 500,
-                fontSize: 16,
-                transition: "background .19s,color .14s",
-                outline: "none",
-                border: "none",
-                boxShadow:
-                  route.pathname === tab.path ||
-                  (tab.path === "/" && route.pathname === "/")
-                    ? "0 2px 9px #50e3c216"
-                    : undefined,
-                letterSpacing: ".01em",
-              }}
-              tabIndex={0}
-            >
-              {tab.label}
-            </Link>
-          ))}
+          {NAV_CATEGORIES.map((cat, i) => {
+            // Single-item category (Dashboard): no dropdown
+            if (cat.items.length === 1) {
+              const item = cat.items[0];
+              return (
+                <Link
+                  key={cat.label}
+                  to={item.path}
+                  style={{
+                    textDecoration: "none",
+                    color: isItemActive(item) ? "#fff" : "#e6e9ee",
+                    background: isItemActive(item) ? "var(--secondary)" : "transparent",
+                    padding: "8px 18px",
+                    margin: "0 0 0 2px",
+                    borderRadius: "7px",
+                    fontWeight: 600,
+                    fontSize: 17,
+                    transition: "background .19s,color .14s",
+                    outline: "none",
+                    border: "none",
+                    boxShadow: isItemActive(item)
+                      ? "0 2px 9px #50e3c216"
+                      : undefined,
+                    letterSpacing: ".01em",
+                    display: "flex",
+                    alignItems: "center",
+                    minWidth: 110,
+                  }}
+                >
+                  {cat.icon} <span style={{ marginLeft: 8 }}>{item.label.replace("🏠 ", "")}</span>
+                </Link>
+              );
+            }
+            // Group (with dropdown)
+            return (
+              <div
+                className="nav-dropdown"
+                style={{
+                  position: "relative",
+                  marginLeft: 2,
+                  userSelect: "none",
+                  zIndex: 12,
+                  minWidth: 0,
+                  fontWeight: 500
+                }}
+                key={cat.label}
+                tabIndex={0}
+                onMouseEnter={() => setOpenCat(i)}
+                onMouseLeave={() => setOpenCat(openCat === i ? null : openCat)}
+                onFocus={() => setOpenCat(i)}
+                onBlur={() => setOpenCat(openCat === i ? null : openCat)}
+              >
+                <button
+                  style={{
+                    background: "transparent",
+                    color:
+                      cat.items.some(isItemActive) ? "#fff" : "#e6e9ee",
+                    borderRadius: "7px",
+                    border: "none",
+                    fontWeight: 600,
+                    fontSize: 16,
+                    padding: "8px 18px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 7,
+                    cursor: "pointer",
+                    minWidth: 120,
+                    transition: "background .12s,color .16s",
+                    boxShadow:
+                      cat.items.some(isItemActive)
+                        ? "0 2px 9px #50e3c216"
+                        : undefined,
+                    outline: "none",
+                    position: "relative"
+                  }}
+                  onClick={() => setOpenCat(openCat === i ? null : i)}
+                  aria-haspopup="listbox"
+                  aria-expanded={openCat === i}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.label}</span>
+                  <span style={{
+                    marginLeft: 6,
+                    display: "inline-block",
+                    transition: "transform 0.13s",
+                    transform: openCat === i ? "rotate(180deg)" : "rotate(0deg)"
+                  }}>▼</span>
+                </button>
+                {/* Drop-down */}
+                <div
+                  style={{
+                    display: openCat === i ? "block" : "none",
+                    background: "#fff",
+                    minWidth: 178,
+                    borderRadius: 10,
+                    boxShadow: "0 6px 30px 0 #4445a220, 0 1.5px 3px #76839419",
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    marginTop: 8,
+                    overflow: "hidden"
+                  }}
+                  role="listbox"
+                  tabIndex={-1}
+                >
+                  {/* Drop-down items */}
+                  {cat.items.map(item => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        width: "100%",
+                        padding: "11px 21px 10px 24px",
+                        textDecoration: "none",
+                        color: isItemActive(item)
+                          ? "var(--primary)"
+                          : "#344557",
+                        background: isItemActive(item)
+                          ? "#eaf6fc"
+                          : "transparent",
+                        fontWeight: isItemActive(item) ? 700 : 500,
+                        fontSize: 15.5,
+                        lineHeight: 1.16,
+                        transition: "background .12s,color .13s",
+                        border: "none",
+                        borderLeft: isItemActive(item)
+                          ? "4px solid var(--accent)"
+                          : "4px solid transparent",
+                      }}
+                      tabIndex={0}
+                      onClick={() => setOpenCat(null)}
+                    >
+                      <span style={{ opacity: .82, minWidth: 27, fontSize: 17 }}>{item.label.match(/^.\s/) ? item.label.slice(0,2) : ""}</span>
+                      <span>{item.label.replace(/^.\s/, "")}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </nav>

@@ -32,6 +32,48 @@ body {
   flex-direction: column;
 }
 
+/* Drop-down nav styles for categorized navbar */
+.nav-dropdown button:focus,
+.nav-dropdown button:active {
+  outline: none;
+  background: var(--secondary);
+  color: white;
+}
+.nav-dropdown[tabindex]:focus > button {
+  outline: none;
+}
+.nav-dropdown > div[role="listbox"]:focus {
+  outline: none;
+}
+
+.nav-dropdown > div[role="listbox"] a:hover,
+.nav-dropdown > div[role="listbox"] a:focus {
+  background: #eaf6fc;
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+.nav-dropdown > div[role="listbox"] a {
+  cursor: pointer;
+}
+
+.nav-dropdown > div[role="listbox"] a[aria-current="page"] {
+  border-left: 4px solid var(--accent);
+  background: #eaf6fc;
+  color: var(--primary);
+}
+
+@media (max-width: 650px) {
+  .navbar .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    height: auto !important;
+    padding-bottom: 8px;
+  }
+}
+
+
 .navbar {
   background-color: var(--base-dark);
   padding: 16px;

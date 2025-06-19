@@ -1,108 +1,291 @@
 :root {
-  --base-light: #00ffff;
-  --base-dark: #00008b;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
+  /* --- Brand / Theme Colors --- */
+  --primary: #204090;
+  --primary-light: #4A90E2;
+  --secondary: #50E3C2;
+  --accent: #F5A623;
+  --surface: #f8fafd;
+  --surface-elevated: #ffffff;
+  --background: #171c26;
+  --base-dark: #171c26;
+  --base-light: #50E3C2;
+  --base-gradient: linear-gradient(106deg, #4A90E2 0%, #50E3C2 100%);
+  --nav-bg: #fff;
+  --navbar-shadow: 0 2px 14px #26418315;
+  --navbar-border: 1px solid #e3eafe;
+  --component-shadow: 0 4px 24px #1831a320;
+
+  /* --- Typography --- */
+  --font-family: 'Inter', 'Poppins', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --display-font: 'Inter', 'Poppins', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --text-color: #181f32;
+  --text-inverse: #FFF;
+  --text-secondary: #546184;
+  --text-disabled: #b4b8cd;
+  --text-action: #4A90E2;
+  --input-bg: #f4f5fb;
+
+  /* --- Borders & Spacing --- */
+  --border-color: #dde2ef;
+  --border-radius: 13px;
+  --border-radius-lg: 18px;
+  --border-radius-sm: 6px;
+  --transition-main: all 0.18s cubic-bezier(.53,.01,.46,1.02);
+  --elevation-1: 0 2px 8px #2040900b;
+  --elevation-2: 0 4px 22px #4a90e21a;
+  --elevation-3: 0 4px 36px #1c364b29;
+  --section-padding: 44px 34px 34px 34px;
+
+  /* --- Layout --- */
+  --container-max-width: 980px;
+  --outer-bg: var(--background);
+
+  /* --- Buttons --- */
+  --btn-bg: var(--primary-light);
+  --btn-bg-hover: #3563b5;
+  --btn-bg-accent: var(--accent);
+  --btn-radius: 8px;
+  --btn-shadow: 0 2px 7px #50e3c21a;
+  --btn-text: #FFF;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  background-color: var(--base-dark);
+  font-family: var(--font-family);
+  background: var(--outer-bg);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 17.25px;
+  letter-spacing: 0.015em;
+  font-weight: 400;
+  min-height: 100vh;
+  line-height: 1.5;
+  transition: var(--transition-main);
 }
 
+/* --- Main App Container --- */
 .app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.navbar {
-  background-color: var(--base-dark);
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border-color);
-  position: fixed;
-  top: 0;
-  width: 100%;
-  box-sizing: border-box;
-  z-index: 100;
-}
-
-.logo {
-  font-size: 1.25rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.logo-symbol {
-  color: var(--base-light);
+  background: var(--outer-bg);
+  font-family: var(--font-family);
 }
 
 .container {
-  max-width: 900px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 30px;
   width: 100%;
   box-sizing: border-box;
 }
 
+/* --- Navigation Bar --- */
+.navbar {
+  background: rgba(255,255,255,0.89);
+  padding: 24px 38px;
+  box-shadow: var(--navbar-shadow);
+  border-bottom: var(--navbar-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  width: 100%;
+  z-index: 110;
+  transition: background 0.14s;
+  backdrop-filter: blur(10px);
+  min-height: 70px;
+  font-family: var(--display-font);
+}
+
+/* --- Brand Logo --- */
+.logo {
+  font-size: 1.41rem;
+  font-weight: 700;
+  font-family: var(--display-font);
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary-light);
+}
+.logo-symbol {
+  color: var(--secondary);
+  font-size: 1.48em;
+  font-weight: 900;
+  margin-right: 1px;
+}
+
+/* --- Hero, Titles & Text --- */
 .hero {
-  padding-top: 120px;
-  padding-bottom: 64px;
+  padding-top: 110px;
+  padding-bottom: 70px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 30px;
+  background: var(--base-gradient);
+  border-radius: var(--border-radius-lg);
+  margin: 28px 0 36px 0;
+  box-shadow: var(--component-shadow);
 }
 
 .subtitle {
-  color: var(--base-light);
-  font-weight: 500;
-  font-size: 1.1rem;
+  color: var(--secondary);
+  font-size: 1.21rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 .title {
-  font-size: 3.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  margin: 0;
+  font-size: 3.2rem;
+  font-family: var(--display-font);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--primary-light);
+  line-height: 1.1;
+  margin: 0 0 10px 0;
 }
 
 .description {
-  font-size: 1.1rem;
-  line-height: 1.5;
+  font-size: 1.18rem;
+  line-height: 1.6;
   color: var(--text-secondary);
-  max-width: 600px;
-  margin-bottom: 16px;
-}
-
-.btn {
-  background-color: var(--base-light);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 1rem;
+  max-width: 610px;
+  margin: 0 auto 19px auto;
   font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
-.btn:hover {
-  background-color: #7691ff;
+/* --- Premium Buttons --- */
+.btn {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: var(--btn-radius);
+  box-shadow: var(--btn-shadow);
+  padding: 11px 26px;
+  font-size: 1.04rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.16s, box-shadow 0.11s;
+  letter-spacing: 0.011em;
+  outline: none;
+  position: relative;
+  line-height: 1.1;
+  appearance: none;
+  border: 1.7px solid transparent;
+}
+
+.btn:hover,
+.btn:focus {
+  background: var(--btn-bg-hover);
+  color: #fff;
+  filter: brightness(1.07);
+  box-shadow: 0 3px 16px #4A90E233, 0 1px 8px #50E3C214;
+}
+
+.btn:active {
+  background: #173570;
+  color: #f9fafa;
+  box-shadow: none;
 }
 
 .btn-large {
-  padding: 12px 24px;
-  font-size: 1.1rem;
+  padding: 13px 32px;
+  font-size: 1.19rem;
+  border-radius: calc(var(--btn-radius) + 2px);
+  box-shadow: 0 3px 17px #20409019;
+}
+
+.btn-accent {
+  background: var(--btn-bg-accent);
+  color: #fff;
+  box-shadow: 0 2px 13px #f5a62325;
+  border-radius: var(--btn-radius);
+}
+.btn-accent:hover {
+  background: #cf8e19;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary-light);
+  border: 1.9px solid var(--primary-light);
+  font-weight: 700;
+  box-shadow: none;
+}
+.btn-outline:hover {
+  background: var(--primary-light);
+  color: #fff;
+}
+
+/* --- Inputs, Table, Misc --- */
+input[type="text"], select {
+  background: var(--input-bg);
+  border: 1.3px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: 10px 13px;
+  font-size: 1.06em;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  outline: none;
+  transition: var(--transition-main);
+  margin-bottom: 0;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: var(--primary-light);
+  background: #f2f9ff;
+}
+
+/* --- Utility --- */
+::-webkit-input-placeholder { color: #c7cbd7; opacity: 1;}
+::-moz-placeholder { color: #c7cbd7; opacity: 1;}
+:-ms-input-placeholder { color: #c7cbd7; opacity: 1;}
+::placeholder { color: #c7cbd7; opacity: 1;}
+
+/* Remove webkit autofill coloring */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 25px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--text-color) !important;
+}
+
+a {
+  color: var(--primary-light);
+  text-decoration: none;
+  transition: color 0.14s;
+}
+a:hover {
+  color: var(--secondary);
+}
+
+/* For any elevated cards/sections */
+.elevated {
+  background: var(--surface);
+  box-shadow: var(--elevation-2);
+  border-radius: var(--border-radius-lg);
+}
+
+/* Hide native outline but keep focus for accessibility */
+*:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Hide scrollbars for cleaner look */
+::-webkit-scrollbar { width: 0.73em; background: #ecf1f6; }
+::-webkit-scrollbar-thumb { background: #dae4f5; border-radius: 9px; }
+
+/* Responsive improvements */
+@media (max-width: 700px) {
+  .container { padding-left: 8px; padding-right: 8px; }
+  .navbar { padding: 14px 6px; min-height: 52px;}
+  .hero { padding-top: 65px; padding-bottom: 33px; }
+  .title { font-size: 2.01rem; }
 }

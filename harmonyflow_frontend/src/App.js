@@ -39,6 +39,19 @@ function App() {
               Dynamic Goal Evolution
             </Link>
             <Link
+              to="/attention-heatmap"
+              style={{
+                color: "#2473ab",
+                background: "#e3f8fd",
+                padding: "6px 13px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                fontWeight: 500,
+                border: "2px solid var(--base-light)"
+              }}>
+              Attention Heatmap
+            </Link>
+            <Link
               to="/archetype-quiz"
               style={{
                 color: "#4A90E2",
@@ -57,6 +70,10 @@ function App() {
           <Routes>
             <Route path="/" element={<HarmonyFlowContainer />} />
             <Route path="/goal-evolution" element={<DynamicGoalEvolutionEngine />} />
+            <Route
+              path="/attention-heatmap"
+              element={React.createElement(require("./AttentionSpanHeatmap").default)}
+            />
             <Route path="/archetype-quiz" element={React.createElement(require("./PersonalityArchetypeQuiz").default)} />
           </Routes>
         </div>

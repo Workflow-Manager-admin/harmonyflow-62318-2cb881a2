@@ -38,14 +38,7 @@ function App() {
               path="/event-life"
               element={React.createElement(require("./EventLife").default)}
             />
-            <Route
-              path="/event-chain"
-              element={React.createElement(require("./LifeEventChainTracker").default)}
-            />
-            <Route
-              path="/life-event-chain"
-              element={React.createElement(require("./LifeEventChainTracker").default)}
-            />
+
             <Route
               path="/sparks-micro-coaching"
               element={React.createElement(require("./SparksMicroCoaching").default)}

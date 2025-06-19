@@ -47,18 +47,6 @@ const NAV_LINKS = [
     style: { color: "var(--primary-light)", borderRadius: 15 }
   },
   {
-    label: "Event Chain Tracker",
-    to: "/event-chain",
-    className: "btn btn-large",
-    style: { background: "var(--primary-light)", color: "#fff", borderRadius: 15 }
-  },
-  {
-    label: "Life Event Chain Tracker",
-    to: "/life-event-chain",
-    className: "btn btn-large",
-    style: { background: "var(--base-light)", color: "#fff", borderRadius: 15 }
-  },
-  {
     label: "Sparks Micro-Coaching",
     to: "/sparks-micro-coaching",
     className: "btn btn-accent",

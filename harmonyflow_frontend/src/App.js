@@ -78,6 +78,20 @@ function App() {
             >
               Event Chain Tracker
             </Link>
+            <Link
+              to="/life-event-chain"
+              style={{
+                color: "#50E3C2",
+                background: "#fff",
+                padding: "6px 14px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                fontWeight: 500,
+                border: "2px solid #4A90E2"
+              }}
+            >
+              Life Event Chain Tracker
+            </Link>
           </div>
         </nav>
         <div style={{ paddingTop: 80, minHeight: '100vh', background: "var(--base-dark)" }}>
@@ -91,6 +105,10 @@ function App() {
             <Route path="/archetype-quiz" element={React.createElement(require("./PersonalityArchetypeQuiz").default)} />
             <Route
               path="/event-chain"
+              element={React.createElement(require("./LifeEventChainTracker").default)}
+            />
+            <Route
+              path="/life-event-chain"
               element={React.createElement(require("./LifeEventChainTracker").default)}
             />
           </Routes>

@@ -281,7 +281,32 @@ function NavBar() {
                 onMouseEnter={() => setOpenCat(i)}
                 onMouseLeave={() => setOpenCat(openCat === i ? null : openCat)}
                 onFocus={() => setOpenCat(i)}
-                onBlur={() => setOpenCat(openCat === i ? null : openCat)}
+                onBlur={e => {
+                  // Only close dropdown if focus moves outside both button and dropdown menu
+                  // Use relatedTarget to detect focus moving to child
+                  const current = e.currentTarget;
+                  if (!current.contains(e.relatedTarget)) setOpenCat(openCat === i ? null : openCat);
+                }}
+                onKeyDown={e => {
+                  // Allow keyboard open, ESC, arrow key navigation
+                  if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setOpenCat(i);
+                    // Focus first link in dropdown after opening
+                    setTimeout(() => {
+                      const menu = e.currentTarget.querySelector('[role="listbox"]');
+                      if (menu) {
+                        const firstLink = menu.querySelector('a, [tabindex="0"]');
+                        if (firstLink) firstLink.focus();
+                      }
+                    }, 0);
+                  } else if (e.key === "Escape") {
+                    setOpenCat(null);
+                    e.currentTarget.querySelector("button").focus();
+                  } else if (e.key === "Tab" && openCat === i) {
+                    setOpenCat(null);
+                  }
+                }}
               >
                 <button
                   style={{

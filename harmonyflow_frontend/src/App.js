@@ -123,6 +123,21 @@ function App() {
             >
               Flow State Induction
             </Link>
+            <Link
+              to="/cross-life-sync"
+              style={{
+                color: "#fff",
+                background: "#6ad8dd",
+                padding: "8px 13px",
+                borderRadius: "9px",
+                textDecoration: "none",
+                fontWeight: 600,
+                border: "2px solid #50E3C2",
+                marginLeft: "8px"
+              }}
+            >
+              Cross-Life Sync
+            </Link>
           </div>
         </nav>
         <div style={{ paddingTop: 80, minHeight: '100vh', background: "var(--base-dark)" }}>
@@ -149,6 +164,10 @@ function App() {
             <Route
               path="/flow-state-induction"
               element={React.createElement(require("./FlowStateInductionSystem").default)}
+            />
+            <Route
+              path="/cross-life-sync"
+              element={React.createElement(require("./CrossLifeSync").default)}
             />
           </Routes>
         </div>

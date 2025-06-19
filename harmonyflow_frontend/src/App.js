@@ -138,6 +138,21 @@ function App() {
             >
               Cross-Life Sync
             </Link>
+            <Link
+              to="/emotion-task-prioritization"
+              style={{
+                color: "#fff",
+                background: "#b77fff",
+                padding: "8px 14px",
+                borderRadius: "9px",
+                textDecoration: "none",
+                fontWeight: 600,
+                border: "2px solid #6c10d3",
+                marginLeft: "8px"
+              }}
+            >
+              Task Prioritization
+            </Link>
           </div>
         </nav>
         <div style={{ paddingTop: 80, minHeight: '100vh', background: "var(--base-dark)" }}>
@@ -168,6 +183,10 @@ function App() {
             <Route
               path="/cross-life-sync"
               element={React.createElement(require("./CrossLifeSync").default)}
+            />
+            <Route
+              path="/emotion-task-prioritization"
+              element={React.createElement(require("./EmotionTaskPrioritization").default)}
             />
           </Routes>
         </div>

@@ -1,3 +1,6 @@
+// Main HarmonyFlow container - now extended with 10 new features:
+// Each feature module is separately documented and modular for future extensibility.
+
 import React, { useState, useEffect } from "react";
 
 // Theme Colors (inline for demonstration; override via App.css or :root in prod)
@@ -11,6 +14,334 @@ const COLORS = {
   border: "#EEF2F7",
   subtleText: "#768394",
 };
+
+/**
+ * COMPONENT: SurpriseChallengeMode ("Spin the Compass")
+ * Provides a randomized wellness or creativity challenge.
+ * Extensible: hook up to API or challenge logic later.
+ */
+function SurpriseChallengeMode({ onSpin }) {
+  const [challenge, setChallenge] = useState(null);
+  // Example challenge pool
+  const POOL = [
+    "Try a 5-min mindfulness exercise 🌱",
+    "Compliment a stranger today 🤝",
+    "Sketch something that reflects your mood 🎨",
+    "Organize your desk or digital space 🧹",
+    "Write a 3-sentence story 📝",
+    "Step outside and notice 3 new things 🚶‍♂️",
+    "Message someone you haven't talked to lately 📱"
+  ];
+  function handleSpin() {
+    const idx = Math.floor(Math.random() * POOL.length);
+    setChallenge(POOL[idx]);
+    if (onSpin) onSpin(POOL[idx]);
+  }
+
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Spin the Compass" color={COLORS.accent} style={{ minHeight: 110 }}>
+      <div style={{ fontSize: 16, marginBottom: 9 }}>
+        {challenge
+          ? <>🎲 <b>Surprise Challenge:</b> <br />{challenge}</>
+          : <>Feeling lucky? Spice up your day with a challenge!</>
+        }
+      </div>
+      <button className="btn" style={{
+        background: COLORS.accent,
+        marginTop: 6, color: "#fff", borderRadius: 5
+      }} onClick={handleSpin}>
+        Spin the Compass
+      </button>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: LocalTribeMatching
+ * Connects users with others in their vicinity with overlapping goals/habits.
+ * Future: Replace static list with integration (e.g. WebSocket or API, proximity services).
+ */
+function LocalTribeMatching({}) {
+  // Demo: hardcoded user list
+  const sampleTribe = [
+    { name: "Maya", goal: "Running", nearby: true },
+    { name: "Leo", goal: "Journaling", nearby: false },
+    { name: "Priya", goal: "Healthy Cooking", nearby: true },
+  ];
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Local Tribe Matching" color={COLORS.secondary}>
+      <div style={{ fontSize: 15, marginBottom: 9 }}>
+        Find people nearby who share your goals—build good habits together.
+      </div>
+      <ul>
+        {sampleTribe.map((u, idx) => (
+          <li key={idx} style={{ marginBottom: 5, color: u.nearby ? COLORS.primary : COLORS.subtleText }}>
+            <span style={{ fontWeight: 500 }}>{u.name}</span> ({u.goal}) {u.nearby && "• Nearby"}
+          </li>
+        ))}
+      </ul>
+      <div style={{ color: COLORS.subtleText, fontSize: 13 }}>* Demo: Replace with real location matching.</div>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: GlobalImpactMeter
+ * Shows progress metrics aggregated across users. For demo, uses random progress.
+ * Extend by connecting to backend/global stats API.
+ */
+function GlobalImpactMeter() {
+  const [globalStats, setGlobalStats] = useState({
+    challengesComplete: 3829,
+    hoursMeditated: 912,
+    businessPartners: 32,
+    ecoActions: 502,
+    progress: Math.floor(Math.random() * 100)
+  });
+
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Global Impact Meter" color={COLORS.primary} style={{ minHeight: 110 }}>
+      <div style={{ marginBottom: 6 }}>
+        <b>🌎 Collective progress</b>
+      </div>
+      <div style={{ display: "flex", gap: 18, flexWrap: "wrap", marginBottom: 8 }}>
+        <div><b>{globalStats.challengesComplete}</b> Challenges</div>
+        <div><b>{globalStats.hoursMeditated}</b> Hours Meditated</div>
+        <div><b>{globalStats.ecoActions}</b> Eco Actions</div>
+        <div><b>{globalStats.businessPartners}</b> Biz Partners</div>
+      </div>
+      <div style={{ width: "100%", background: COLORS.border, borderRadius: 8, height: 10, marginBottom: 4 }}>
+        <div style={{
+          width: globalStats.progress + "%",
+          background: COLORS.secondary,
+          height: "100%",
+          borderRadius: 8,
+          transition: "width 400ms"
+        }} />
+      </div>
+      <span style={{ color: COLORS.subtleText, fontSize: 13 }}>{globalStats.progress}% to next global milestone!</span>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: SeasonalTournaments
+ * Shows leaderboard and seasonal challenge structure.
+ * Can be extended with real-time scores and tournaments integration.
+ */
+function SeasonalTournaments() {
+  // Demo leaderboard scores
+  const leaderboard = [
+    { name: "You", points: 120 },
+    { name: "Ava", points: 140 },
+    { name: "Jamal", points: 118 },
+    { name: "Sasha", points: 155 }
+  ];
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Seasonal Tournaments" color={COLORS.accent}>
+      <div style={{ fontSize: 15, marginBottom: 7 }}>
+        Compete in seasonal quests—climb the leaderboard with positive actions!
+      </div>
+      <ol>
+        {leaderboard.sort((a,b) => b.points - a.points).map((u,i) => (
+          <li key={i} style={{ color: i===0 ? COLORS.primary : COLORS.text }}>
+            <b>{u.name}</b>: {u.points} pts
+          </li>
+        ))}
+      </ol>
+      <div style={{ color: COLORS.subtleText, fontSize: 13 }}>Real-time and global scores coming soon.</div>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: AnonymousStoryCircles
+ * Lets users share and view anonymous inspirational/struggle stories.
+ * Add backend or moderation for extensibility.
+ */
+function AnonymousStoryCircles() {
+  const demoStories = [
+    { text: "I finally did my first 10k run! Even though I was slow, I finished! 🏃‍♂️", ts: "9 min ago" },
+    { text: "Sometimes I just feel lost. But journaling helps me see progress. 💡", ts: "22 min ago" },
+    { text: "Struggling to meditate daily—tips?", ts: "55 min ago" },
+  ];
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Anonymous Story Circles" color={COLORS.secondary}>
+      <div style={{ fontSize: 15, marginBottom: 9 }}>
+        Share anonymously, read others' journeys, feel less alone.
+      </div>
+      <ul style={{ listStyle: "circle", paddingLeft: 20 }}>
+        {demoStories.map((s, i) => (
+          <li key={i} style={{ marginBottom: 7 }}>
+            <span style={{ color: COLORS.text }}>{s.text}</span>
+            <span style={{ color: COLORS.subtleText, marginLeft: 7, fontSize: 13 }}>({s.ts})</span>
+          </li>
+        ))}
+      </ul>
+      <div style={{ color: COLORS.subtleText, fontSize: 13 }}>Your story stays anonymous. Next: submit form & moderation.</div>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: CreativityCapsules
+ * Pushes creative prompts (art/music/writing). Demo: Random capsule prompt.
+ * Next: timed capsules, save responses, share in community.
+ */
+function CreativityCapsules() {
+  const capsules = [
+    "Draw your day as a landscape 🌄",
+    "Write a 3-line poem about hope 🌱",
+    "Record 10s of sounds around you 🎤",
+    "Invent a new recipe using only 5 ingredients 🍲"
+  ];
+  const [prompt, setPrompt] = useState(null);
+  function openCapsule() {
+    setPrompt(capsules[Math.floor(Math.random() * capsules.length)]);
+  }
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Creativity Capsules" color={COLORS.primary}>
+      <div style={{ fontSize: 15, marginBottom: 8 }}>
+        Time-unlock a creative challenge—draw, write, make something new!
+      </div>
+      <div style={{ margin: "12px 0", fontWeight: 500 }}>{prompt ? prompt : "Ready for a creative mission?"}</div>
+      <button className="btn" style={{
+        background: COLORS.primary, color: "#fff", borderRadius: 5
+      }} onClick={openCapsule}>
+        Open Capsule
+      </button>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: MoodReflectorAI
+ * An AI companion that reflects user's mood and gives feedback.
+ * Extensible: connect to chat/AI API for realtime responses.
+ */
+function MoodReflectorAI({ userMood }) {
+  // Simulated mood reflection logic
+  const response =
+    userMood && userMood.mood
+      ? ({
+        "😊": "I see you're full of joy! 🌞 Keep shining.",
+        "😕": "It's okay to feel uncertain. A short walk might help.",
+        "😢": "You seem down. Remember: clouds pass. Reach out if needed.",
+        "😌": "You look serene today. Embrace it.",
+        "😐": "Neutral is a valid feeling! Check in with yourself later.",
+        "😤": "Sounds like stress. Deep breath. Want to journal your thoughts?"
+      }[userMood.mood]) || "How are you feeling today?"
+      : "How are you feeling today?";
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Mood-Reflector AI Companion" color={COLORS.accent}>
+      <div style={{ fontSize: 15, marginBottom: 3 }}>
+        {response}
+      </div>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: EmergencyDetoxMode
+ * Triggers a minimalist "detox" - disables social feeds, recommends self-care.
+ * Extensible: Add notification integration, darker theme, or strict modes.
+ */
+function EmergencyDetoxMode() {
+  const [active, setActive] = useState(false);
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Emergency Detox Mode" color={COLORS.primary}>
+      <div style={{ fontSize: 15, marginBottom: 8 }}>
+        {active
+          ? "Detox Mode is ON. Digital distractions muted. Focus & breathe."
+          : "Need to unplug for a moment? Activate Emergency Detox for focus."}
+      </div>
+      <button className="btn" style={{
+        background: COLORS.primary,
+        color: "#fff", borderRadius: 5
+      }} onClick={() => setActive(a => !a)}>
+        {active ? "End Detox" : "Start Emergency Detox"}
+      </button>
+      {active && <div style={{ color: COLORS.accent, fontWeight: 500, marginTop: 3, fontSize: 13 }}>🔕 Notifications disabled.</div>}
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: LocalBusinessPartnerships
+ * Highlights nearby business offers/integration for positive user actions.
+ * Future: Geo-location integration & dynamic offers.
+ */
+function LocalBusinessPartnerships() {
+  const partners = [
+    { name: "Harmony Yoga Studio", offer: "20% off a wellness class" },
+    { name: "GreenBites Cafe", offer: "Free herbal tea with healthy meal" }
+  ];
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Local Business Partnerships" color={COLORS.secondary}>
+      <div style={{ marginBottom: 10, fontSize: 15 }}>Unlock offers for positive habits in your area!</div>
+      <ul>
+        {partners.map((b, i) => (
+          <li key={i} style={{
+            marginBottom: 7, color: COLORS.primary
+          }}>
+            <b>{b.name}</b>: <span style={{ color: COLORS.text }}>{b.offer}</span>
+          </li>
+        ))}
+      </ul>
+      <div style={{ color: COLORS.subtleText, fontSize: 13 }}>
+        Geo-matched offers coming soon.
+      </div>
+    </Card>
+  );
+}
+
+/**
+ * COMPONENT: ChallengeCapsules
+ * Provides time-release "quests" that unlock after set intervals.
+ * Extensible: connect to server for dynamic quests, progress sync.
+ */
+function ChallengeCapsules() {
+  const capsules = [
+    { title: "Hydration Quest", unlockIn: "00:00:10", desc: "Drink a glass of water" },
+    { title: "Gratitude Quest", unlockIn: "00:03:00", desc: "List 3 things you're grateful for" }
+  ];
+  const [unlocked, setUnlocked] = useState(false);
+  // Simulate capsule unlock after timeout for demo
+  useEffect(() => {
+    if (!unlocked) {
+      const t = setTimeout(() => setUnlocked(true), 8000);
+      return () => clearTimeout(t);
+    }
+  }, [unlocked]);
+  // PUBLIC_INTERFACE
+  return (
+    <Card title="Challenge Capsules" color={COLORS.accent}>
+      <div style={{ fontSize: 15, marginBottom: 7 }}>Unlock surprise time-based quests throughout the day.</div>
+      {!unlocked ? (
+        <div>
+          <div style={{ color: COLORS.primary, marginBottom: 5 }}>Next Capsule: unlocks soon…</div>
+          <button className="btn" disabled style={{ background: COLORS.border, color: COLORS.primary }}>Locked</button>
+        </div>
+      ) : (
+        <div>
+          <div style={{ fontWeight: 500 }}>{capsules[0].title}</div>
+          <div style={{ marginBottom: 7 }}>{capsules[0].desc}</div>
+          <button className="btn" style={{ background: COLORS.accent, color: "#fff" }}>Mark Complete</button>
+        </div>
+      )}
+    </Card>
+  );
+}
+
 
 const defaultUserData = {
   goals: [],
@@ -287,7 +618,57 @@ function KpiSection({ kpis, onUpdateKpi }) {
   );
 }
 
-// ----------------- Dashboard Layout (Main Container) ----------------
+/**
+ * Dashboard tab definitions for navigation 
+ * and layout arrangements. All 10 new feature modules are linked.
+ */
+const FEATURE_TABS = [
+  {
+    key: "classic",
+    label: "Classic Dashboard"
+  },
+  {
+    key: "spin",
+    label: "Spin the Compass"
+  },
+  {
+    key: "tribe",
+    label: "Local Tribes"
+  },
+  {
+    key: "impact",
+    label: "Global Impact"
+  },
+  {
+    key: "tournament",
+    label: "Tournaments"
+  },
+  {
+    key: "stories",
+    label: "Story Circles"
+  },
+  {
+    key: "creativity",
+    label: "Creativity Capsules"
+  },
+  {
+    key: "reflector",
+    label: "Mood-Reflector AI"
+  },
+  {
+    key: "detox",
+    label: "Detox Mode"
+  },
+  {
+    key: "biz",
+    label: "Biz Partners"
+  },
+  {
+    key: "challengeCapsules",
+    label: "Challenge Capsules"
+  }
+];
+
 const dashboardGrid = {
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
@@ -317,6 +698,8 @@ export default function HarmonyFlowContainer() {
   const [moodLogs, setMoodLogs] = useState([]);
   const [journal, setJournal] = useState([]);
   const [kpis, setKpis] = useState({ sleep: [7], focus: [6], complete: [] });
+  // Feature tab state (for navigation)
+  const [activeTab, setActiveTab] = useState("classic");
 
   // Data fetch on mount (simulate API)
   useEffect(() => {
@@ -357,6 +740,78 @@ export default function HarmonyFlowContainer() {
     fakeSave("kpis", { ...kpis, [type]: [...kpis[type].slice(-6), parseInt(value, 10)] });
   }
 
+  // Build navigation tabs for feature discoverability
+  function renderTabs() {
+    return (
+      <div style={{
+        display: "flex",
+        gap: 10,
+        margin: "0 0 18px 0",
+        overflowX: "auto",
+        flexWrap: "wrap",
+        justifyContent: "center"
+      }}>
+        {FEATURE_TABS.map(tab =>
+          <button
+            key={tab.key}
+            style={{
+              background: activeTab === tab.key ? COLORS.primary : COLORS.border,
+              color: activeTab === tab.key ? "#fff" : COLORS.text,
+              border: "none",
+              borderRadius: 7,
+              padding: "7px 18px",
+              fontWeight: 500,
+              cursor: "pointer",
+              boxShadow: activeTab === tab.key ? "0 2px 8px #4a90e21d" : undefined,
+              transition: "background 0.16s"
+            }}
+            onClick={() => setActiveTab(tab.key)}
+          >
+            {tab.label}
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  // Main layout: Use a grid for "classic" mode, single-column for feature modules
+  function renderDashboardContent() {
+    if (activeTab === "classic") {
+      return (
+        <div style={dashboardGrid}>
+          <div>
+            <GoalMap goals={goals} habits={habits} onAddGoal={handleAddGoal} />
+            <Scheduler events={events} onAddEvent={handleAddEvent} />
+            <KpiSection kpis={kpis} onUpdateKpi={handleUpdateKpi} />
+            <SurpriseChallengeMode />
+          </div>
+          <div>
+            <MoodTracker moodLogs={moodLogs} onLogMood={handleLogMood} />
+            <Journal journal={journal} onAddEntry={handleAddEntry} />
+            <AiLifeCoach journal={journal} kpis={kpis} moodLogs={moodLogs} />
+            <MoodReflectorAI userMood={moodLogs.slice(-1)[0]}/>
+          </div>
+        </div>
+      );
+    }
+
+    // Switch for each feature tab, show single feature in large card
+    return (
+      <div style={{ maxWidth: 650, margin: "0 auto" }}>
+        {activeTab === "spin" && <SurpriseChallengeMode />}
+        {activeTab === "tribe" && <LocalTribeMatching />}
+        {activeTab === "impact" && <GlobalImpactMeter />}
+        {activeTab === "tournament" && <SeasonalTournaments />}
+        {activeTab === "stories" && <AnonymousStoryCircles />}
+        {activeTab === "creativity" && <CreativityCapsules />}
+        {activeTab === "reflector" && <MoodReflectorAI userMood={moodLogs.slice(-1)[0]}/>}
+        {activeTab === "detox" && <EmergencyDetoxMode />}
+        {activeTab === "biz" && <LocalBusinessPartnerships />}
+        {activeTab === "challengeCapsules" && <ChallengeCapsules />}
+      </div>
+    );
+  }
+
   return (
     <div
       style={{
@@ -391,18 +846,26 @@ export default function HarmonyFlowContainer() {
       </nav>
       <main style={{ maxWidth: 1100, margin: "0 auto", padding: "38px 32px 24px 32px" }}>
         <div style={sectionTitle}>My Life Dashboard</div>
-        <div style={dashboardGrid}>
-          <div>
-            <GoalMap goals={goals} habits={habits} onAddGoal={handleAddGoal} />
-            <Scheduler events={events} onAddEvent={handleAddEvent} />
-            <KpiSection kpis={kpis} onUpdateKpi={handleUpdateKpi} />
+        {renderTabs()}
+        {renderDashboardContent()}
+        {/* Special grid for business partners, global meter, story circle, tournaments, challenge capsules etc in Classic mode */}
+        {activeTab === "classic" && (
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+            gap: 30,
+            marginTop: 25
+          }}>
+            <LocalTribeMatching />
+            <GlobalImpactMeter />
+            <SeasonalTournaments />
+            <AnonymousStoryCircles />
+            <CreativityCapsules />
+            <EmergencyDetoxMode />
+            <LocalBusinessPartnerships />
+            <ChallengeCapsules />
           </div>
-          <div>
-            <MoodTracker moodLogs={moodLogs} onLogMood={handleLogMood} />
-            <Journal journal={journal} onAddEntry={handleAddEntry} />
-            <AiLifeCoach journal={journal} kpis={kpis} moodLogs={moodLogs} />
-          </div>
-        </div>
+        )}
         <footer style={{ marginTop: 48, fontSize: 14, color: COLORS.subtleText, textAlign: "center" }}>
           <span>
             Designed for modern, purpose-driven productivity &middot; HarmonyFlow &copy; {new Date().getFullYear()}

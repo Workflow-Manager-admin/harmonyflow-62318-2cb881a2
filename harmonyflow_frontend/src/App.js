@@ -22,171 +22,41 @@ function App() {
             <span className="logo-symbol">●</span>
             HarmonyFlow
           </div>
-          <div style={{ display: "flex", gap: "25px", alignItems: "center" }}>
-            <Link to="/" style={{ color: "#fff", textDecoration: 'none', fontWeight: 500 }}>
+          <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+            <Link to="/" className="btn btn-outline" style={{ fontWeight: 600, borderRadius: 13 }}>
               Dashboard
             </Link>
-            <Link
-              to="/goal-evolution"
-              style={{
-                color: "#fff",
-                background: "var(--base-light)",
-                padding: "6px 12px",
-                borderRadius: "7px",
-                textDecoration: "none",
-                fontWeight: 500,
-                transition: "background 0.19s"
-              }}>
+            <Link to="/goal-evolution" className="btn btn-accent" style={{ fontWeight: 600, borderRadius: 15 }}>
               Dynamic Goal Evolution
             </Link>
-            <Link
-              to="/attention-heatmap"
-              style={{
-                color: "#2473ab",
-                background: "#e3f8fd",
-                padding: "6px 13px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 500,
-                border: "2px solid var(--base-light)"
-              }}>
+            <Link to="/attention-heatmap" className="btn btn-outline" style={{ color: "var(--primary-light)", borderRadius: 15 }}>
               Attention Heatmap
             </Link>
-            <Link
-              to="/archetype-quiz"
-              style={{
-                color: "#4A90E2",
-                background: "#fff",
-                padding: "6px 13px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 500,
-                border: "2px solid var(--base-light)"
-              }}>
+            <Link to="/archetype-quiz" className="btn btn-outline" style={{ color: "var(--primary-light)", borderRadius: 15 }}>
               Archetype Quiz
             </Link>
-            <Link
-              to="/event-chain"
-              style={{
-                color: "#fff",
-                background: "#50E3C2",
-                padding: "6px 15px",
-                borderRadius: "7px",
-                textDecoration: "none",
-                fontWeight: 500,
-                border: "2px solid #4A90E2"
-              }}
-            >
+            <Link to="/event-chain" className="btn btn-large" style={{ background: "var(--primary-light)", color: "#fff", borderRadius: 15 }}>
               Event Chain Tracker
             </Link>
-            <Link
-              to="/life-event-chain"
-              style={{
-                color: "#50E3C2",
-                background: "#fff",
-                padding: "6px 14px",
-                borderRadius: "8px",
-                textDecoration: "none",
-                fontWeight: 500,
-                border: "2px solid #4A90E2"
-              }}
-            >
+            <Link to="/life-event-chain" className="btn btn-large" style={{ background: "var(--base-light)", color: "#fff", borderRadius: 15 }}>
               Life Event Chain Tracker
             </Link>
-            <Link
-              to="/sparks-micro-coaching"
-              style={{
-                color: "#fff",
-                background: "#ffbb37",
-                padding: "7px 14px",
-                borderRadius: "10px",
-                textDecoration: "none",
-                fontWeight: 600,
-                border: "2px solid #F5A623",
-                margin: "0 0 0 0",
-                boxShadow: "0 1px 7px #fae0b5cc"
-              }}
-            >
+            <Link to="/sparks-micro-coaching" className="btn btn-accent" style={{ fontWeight: 700, borderRadius: 15 }}>
               Sparks Micro-Coaching
             </Link>
-            <Link
-              to="/flow-state-induction"
-              style={{
-                color: "#fff",
-                background: "#4A90E2",
-                padding: "8px 16px",
-                borderRadius: "9px",
-                textDecoration: "none",
-                fontWeight: 600,
-                border: "2px solid #50E3C2",
-                marginLeft: "8px"
-              }}
-            >
+            <Link to="/flow-state-induction" className="btn btn-large" style={{ background: "linear-gradient(98deg,#437AFF 21%,#50E3C2 100%)", color: "#fff", borderRadius: 15 }}>
               Flow State Induction
             </Link>
-            <Link
-              to="/cross-life-sync"
-              style={{
-                color: "#fff",
-                background: "#6ad8dd",
-                padding: "8px 13px",
-                borderRadius: "9px",
-                textDecoration: "none",
-                fontWeight: 600,
-                border: "2px solid #50E3C2",
-                marginLeft: "8px"
-              }}
-            >
+            <Link to="/cross-life-sync" className="btn btn-large" style={{ background: "linear-gradient(98deg,#50E3C2 10%,#4A90E2 94%)", color: "#fff", borderRadius: 15 }}>
               Cross-Life Sync
             </Link>
-            <Link
-              to="/emotion-task-prioritization"
-              style={{
-                color: "#fff",
-                background: "#b77fff",
-                padding: "8px 14px",
-                borderRadius: "9px",
-                textDecoration: "none",
-                fontWeight: 600,
-                border: "2px solid #6c10d3",
-                marginLeft: "8px"
-              }}
-            >
+            <Link to="/emotion-task-prioritization" className="btn btn-large" style={{ background: "linear-gradient(98deg,#b77fff 10%,#50E3C2 94%)", color: "#fff", borderRadius: 15 }}>
               Task Prioritization
             </Link>
-            <Link
-              to="/whisper-journal"
-              style={{
-                color: "#fff",
-                background: "#4758ee",
-                padding: "8px 17px",
-                borderRadius: "11px",
-                textDecoration: "none",
-                fontWeight: 700,
-                border: "2px solid #4A90E2",
-                marginLeft: "8px",
-                letterSpacing: "0.01em",
-                boxShadow: "0 1px 7px #c7e3fe80"
-              }}
-            >
+            <Link to="/whisper-journal" className="btn btn-accent" style={{ background: "linear-gradient(96deg,#4A90E2 60%,#50E3C2 100%)", color: "#fff", borderRadius: 15 }}>
               Whisper Journal
             </Link>
-            {/* New Life Portfolio Builder navigation link */}
-            <Link
-              to="/life-portfolio"
-              style={{
-                color: "#fff",
-                background: "#F5A623",
-                padding: "8px 18px",
-                borderRadius: "11px",
-                textDecoration: "none",
-                fontWeight: 700,
-                border: "2px solid #F5A623",
-                marginLeft: "8px",
-                letterSpacing: "0.01em",
-                boxShadow: "0 1px 7px #fae0b5cc"
-              }}
-            >
+            <Link to="/life-portfolio" className="btn btn-large" style={{ background: "linear-gradient(95deg,#F5A623 5%,#4A90E2 100%)", color: "#fff", fontWeight: 700, borderRadius: 15 }}>
               Life Portfolio
             </Link>
           </div>

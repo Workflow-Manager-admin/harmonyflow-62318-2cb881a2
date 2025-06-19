@@ -35,6 +35,10 @@ function App() {
             />
             <Route path="/archetype-quiz" element={React.createElement(require("./PersonalityArchetypeQuiz").default)} />
             <Route
+              path="/event-life"
+              element={React.createElement(require("./EventLife").default)}
+            />
+            <Route
               path="/event-chain"
               element={React.createElement(require("./LifeEventChainTracker").default)}
             />

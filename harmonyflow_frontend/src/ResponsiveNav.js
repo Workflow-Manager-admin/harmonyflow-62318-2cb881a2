@@ -23,6 +23,12 @@ const NAV_LINKS = [
     style: { fontWeight: 600, borderRadius: 13 }
   },
   {
+    label: "Event Life",
+    to: "/event-life",
+    className: "btn btn-large",
+    style: { background: "linear-gradient(94deg, #50E3C2 12%, #F5A623 84%)", color: "#fff", borderRadius: 16, fontWeight: 700 }
+  },
+  {
     label: "Dynamic Goal Evolution",
     to: "/goal-evolution",
     className: "btn btn-accent",

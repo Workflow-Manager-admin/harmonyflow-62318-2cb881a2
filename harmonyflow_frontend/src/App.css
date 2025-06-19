@@ -159,19 +159,116 @@ body {
   filter: brightness(1.09);
 }
 
-.nav-more-menu {
-  animation: nav-dropdown 0.20s cubic-bezier(.47,.09,.44,1.28);
-}
-@keyframes nav-dropdown {
-  from { transform: translateY(-10px); opacity: 0.1; }
-  to   { transform: translateY(0); opacity: 1; }
+/* ------ Dropdown Nav & Premium Category Styles ------ */
+
+/* --- Premium dropdown menu animation --- */
+.nav-dropdown {
+  animation: nav-dropdown .22s cubic-bezier(.45,.13,.24,1.09);
+  box-shadow: 0 8px 37px #4A90E244;
+  background: #fff;
+  border-radius: 13px;
+  border: 1.4px solid #e0eafe;
+  padding: 4px 0;
+  min-width: 210px;
+  max-width: 350px;
 }
 
-.nav-active, .nav-active:focus, .nav-active:hover {
+@keyframes nav-dropdown {
+  from { transform: translateY(-12px) scale(.96); opacity: 0.13; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* --- Dropdown links --- */
+.nav-dropdown .btn,
+.nav-dropdown .btn-outline {
+  box-shadow: none !important;
+  border: none !important;
+  background: none !important;
+  color: var(--primary-light) !important;
+  width: 100% !important;
+  border-radius: 0 !important;
+  padding: 13px 19px 10px 16px !important;
+  min-width: unset !important;
+  text-align: left !important;
+  font-size: 1.11em !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.013em !important;
+  line-height: 1.29 !important;
+  outline: none !important;
+  display: flex !important;
+  align-items: baseline !important;
+}
+.nav-dropdown .btn:hover,
+.nav-dropdown .btn-outline:hover,
+.nav-dropdown .btn:focus,
+.nav-dropdown .btn-outline:focus {
+  background: linear-gradient(95deg,#437AFF 6%,#50E3C2 100%) !important;
+  color: #fff !important;
+  border-left: 4px solid var(--secondary) !important;
+}
+
+/* --- Premium nav category (button inside nav-inner) --- */
+.nav-inner .btn.btn-large {
+  background: linear-gradient(97deg,#e6f0ff 20%,#edfff8 100%);
+  color: #4A90E2;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1.1em;
+}
+.nav-inner .btn.btn-large:focus,
+.nav-inner .btn.btn-large:hover {
+  background: linear-gradient(99deg,#437AFF 30%,#50E3C2 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 23px #4775f522;
+  outline: 2.5px solid var(--accent);
+}
+
+/* --- nav-active for links and dropdowns --- */
+.nav-active, .nav-active:focus, .nav-active:hover,
+.nav-dropdown .nav-active {
   box-shadow: 0 2.5px 27px #4775f544 !important;
   background: linear-gradient(98deg,#437AFF 3%,#50E3C2 97%) !important;
   color: #fff !important;
 }
+/* Highlight the left side of active/category dropdown children */
+.nav-dropdown .nav-active {
+  border-left: 4px solid var(--primary-light) !important;
+}
+
+/* details dropdown in mobile nav */
+.nav-mobile-drawer details > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+.nav-mobile-drawer details[open] > summary {
+  color: var(--primary-light);
+}
+.nav-mobile-drawer details > nav .btn {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+/* Hide arrow for details/summary */
+.nav-mobile-drawer details > summary::-webkit-details-marker {
+  display: none;
+}
+.nav-mobile-drawer details > summary::marker {
+  display: none;
+}
+
+/* Category label played up (mobile) */
+.nav-mobile-drawer summary {
+  font-size: 1.08em;
+  font-weight: 780;
+  margin-top: 6px;
+}
+
+.nav-dropdown .btn > span:nth-child(2) {
+  font-weight: 700;
+  margin-right: 8px;
+}
+
 
 @media (max-width: 1400px) {
   .navbar { padding-left: 20px; padding-right: 20px; }

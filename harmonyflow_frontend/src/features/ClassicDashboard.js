@@ -18,21 +18,59 @@ import ChallengeCapsules from "./ChallengeCapsules";
 export default function ClassicDashboard() {
   // Demo state for "goal map", "events", etc. (minimal for static display)
   return (
-    <div>
-      <h1 style={{ color: "#4A90E2", fontWeight: 800, fontSize: "2.15rem", margin: "17px 0 17px 3px" }}>
+    <div
+      style={{
+        padding: "0 0 0 0",
+      }}
+    >
+      <h1
+        style={{
+          color: "var(--primary)",
+          fontWeight: 800,
+          fontSize: "2.2rem",
+          margin: "13px 0 25px 3px",
+          lineHeight: 1.16,
+          letterSpacing: "-0.01em",
+        }}
+      >
         My Life Dashboard
       </h1>
-      <div style={{
-        display: "flex", flexWrap: "wrap", gap: 34, alignItems: "flex-start"
-      }}>
-        <div style={{ flex: "1 1 370px", minWidth: 320 }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "var(--gap-lg)",
+          alignItems: "flex-start",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            flex: "1 1 395px",
+            minWidth: 310,
+            maxWidth: 499,
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--gap-md)",
+          }}
+        >
           <SurpriseChallengeMode />
           <LocalTribeMatching />
           <CreativityCapsules />
           <EmergencyDetoxMode />
           <ChallengeCapsules />
         </div>
-        <div style={{ flex: "1 1 370px", minWidth: 320 }}>
+        <div
+          style={{
+            flex: "1 1 395px",
+            minWidth: 310,
+            maxWidth: 499,
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--gap-md)",
+          }}
+        >
           <GlobalImpactMeter />
           <SeasonalTournaments />
           <AnonymousStoryCircles />

@@ -96,43 +96,107 @@ const FEATURE_PAGES = [
   },
 ];
 
-// Navigation component
+/**
+ * NavBar component - uses Flexbox for alignment and space.
+ * List of nav links in a flex grid for even spacing.
+ * Sticks to modern, light-dashboard design: accent color for logo, clean hover/active.
+ */
 function NavBar() {
   const route = useLocation();
   return (
-    <nav className="navbar" style={{
-      background: COLORS.primary,
-      boxShadow: "0 2px 12px 0 rgba(74,144,226,0.04)",
-      position: "sticky",
-      top: 0,
-      zIndex: 100,
-      marginBottom: 14
-    }}>
-      <div className="container" style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between"
-      }}>
-        <div className="logo">
-          <span className="logo-symbol" style={{ color: COLORS.accent, fontSize: 22 }}>🧭</span>
+    <nav
+      className="navbar"
+      style={{
+        background: "var(--primary)",
+        minHeight: "var(--navbar-height)",
+        borderBottom: "1px solid var(--border-color)",
+        boxShadow: "0 2px 12px 0 rgba(74,144,226,0.04)",
+        position: "sticky",
+        top: 0,
+        width: "100%",
+        zIndex: 100,
+        padding: 0,
+        marginBottom: 0,
+      }}
+    >
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          maxWidth: 1100,
+          width: "100%",
+          margin: "0 auto",
+          height: "var(--navbar-height)",
+        }}
+      >
+        <div
+          className="logo"
+          style={{
+            fontFamily: "inherit",
+            fontSize: "1.3rem",
+            fontWeight: 700,
+            display: "flex",
+            alignItems: "center",
+            gap: "9px",
+            letterSpacing: "0.5px",
+            color: "var(--text-on-dark)",
+            userSelect: "none",
+          }}
+        >
+          <span
+            className="logo-symbol"
+            style={{
+              color: "var(--accent)",
+              fontSize: 26,
+              marginRight: 3,
+            }}
+          >
+            🧭
+          </span>
           HarmonyFlow
         </div>
-        <div>
-          {FEATURE_PAGES.map(tab => (
+        <div
+          style={{
+            display: "flex",
+            gap: "7px",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          {FEATURE_PAGES.map((tab, i) => (
             <Link
               key={tab.key}
               to={tab.path}
               style={{
                 textDecoration: "none",
-                marginRight: 12,
-                color: route.pathname === tab.path || (tab.path === "/" && route.pathname === "/") ? "#fff" : "#e6e9ee",
-                background: route.pathname === tab.path || (tab.path === "/" && route.pathname === "/") ? COLORS.secondary : "transparent",
-                padding: "7px 17px",
-                borderRadius: "6px",
+                color:
+                  route.pathname === tab.path ||
+                  (tab.path === "/" && route.pathname === "/")
+                    ? "#fff"
+                    : "#e6e9ee",
+                background:
+                  route.pathname === tab.path ||
+                  (tab.path === "/" && route.pathname === "/")
+                    ? "var(--secondary)"
+                    : "transparent",
+                padding: "8px 18px",
+                margin: "0 0 0 2px",
+                borderRadius: "7px",
                 fontWeight: 500,
-                fontSize: 15,
-                transition: "background .17s"
+                fontSize: 16,
+                transition: "background .19s,color .14s",
+                outline: "none",
+                border: "none",
+                boxShadow:
+                  route.pathname === tab.path ||
+                  (tab.path === "/" && route.pathname === "/")
+                    ? "0 2px 9px #50e3c216"
+                    : undefined,
+                letterSpacing: ".01em",
               }}
+              tabIndex={0}
             >
               {tab.label}
             </Link>
@@ -143,26 +207,69 @@ function NavBar() {
   );
 }
 
-// PUBLIC_INTERFACE
+/**
+ * Main app container and feature router.
+ * Use consistent container width, padding, and grid.
+ */
 export default function HarmonyFlowContainer() {
   return (
-    <div className="app" style={{
-      minHeight: "100vh",
-      background: COLORS.background,
-      color: COLORS.text
-    }}>
+    <div
+      className="app"
+      style={{
+        minHeight: "100vh",
+        minWidth: 0,
+        background: "var(--background)",
+        color: "var(--text-color)",
+        width: "100vw",
+      }}
+    >
       <NavBar />
-      <main className="container" style={{ paddingTop: 86, paddingBottom: 25 }}>
+      {/* Top offset for navbar is set by --navbar-height */}
+      <main
+        className="container"
+        style={{
+          paddingTop: "calc(var(--navbar-height) + 22px)",
+          paddingBottom: "41px",
+          maxWidth: 1100,
+          minWidth: "auto",
+        }}
+      >
         <Routes>
-          {FEATURE_PAGES.map(page => (
+          {FEATURE_PAGES.map((page) => (
             <Route path={page.path} element={page.element} key={page.key} />
           ))}
           {/* 404 fallback */}
-          <Route path="*" element={<div style={{ marginTop: 40, color: COLORS.accent }}><b>404:</b> Page not found.</div>} />
+          <Route
+            path="*"
+            element={
+              <div
+                style={{
+                  marginTop: 54,
+                  color: "var(--accent)",
+                  fontWeight: 500,
+                  fontSize: 20,
+                  padding: 22,
+                  textAlign: "center",
+                }}
+              >
+                <b>404:</b> Page not found.
+              </div>
+            }
+          />
         </Routes>
-        <footer style={{ marginTop: 56, fontSize: 14, color: COLORS.subtleText, textAlign: "center" }}>
+        <footer
+          style={{
+            marginTop: 68,
+            fontSize: 14,
+            color: "var(--text-secondary)",
+            textAlign: "center",
+            letterSpacing: "0.01em",
+            opacity: 0.87,
+          }}
+        >
           <span>
-            Designed for modern, purpose-driven productivity &middot; HarmonyFlow &copy; {new Date().getFullYear()}
+            Designed for modern, purpose-driven productivity &middot; HarmonyFlow &copy;{" "}
+            {new Date().getFullYear()}
           </span>
         </footer>
       </main>

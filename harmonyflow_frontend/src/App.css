@@ -164,13 +164,14 @@ body {
 /* --- Premium dropdown menu animation --- */
 .nav-dropdown {
   animation: nav-dropdown .22s cubic-bezier(.45,.13,.24,1.09);
-  box-shadow: 0 8px 37px #4A90E244;
+  box-shadow: 0 8px 44px #4A90E260, 0 2px 17px #437AFF28;
   background: #fff;
   border-radius: 13px;
   border: 1.4px solid #e0eafe;
   padding: 4px 0;
   min-width: 210px;
   max-width: 350px;
+  transition: box-shadow 0.17s;
 }
 
 @keyframes nav-dropdown {
@@ -197,14 +198,18 @@ body {
   outline: none !important;
   display: flex !important;
   align-items: baseline !important;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
 }
 .nav-dropdown .btn:hover,
 .nav-dropdown .btn-outline:hover,
 .nav-dropdown .btn:focus,
-.nav-dropdown .btn-outline:focus {
+.nav-dropdown .btn-outline:focus,
+.nav-dropdown .navbar-focus {
   background: linear-gradient(95deg,#437AFF 6%,#50E3C2 100%) !important;
   color: #fff !important;
   border-left: 4px solid var(--secondary) !important;
+  outline: 2.5px solid var(--accent) !important;
+  box-shadow: 0 2px 17px #437AFF12;
 }
 
 /* --- Premium nav category (button inside nav-inner) --- */
@@ -216,11 +221,13 @@ body {
   font-size: 1.1em;
 }
 .nav-inner .btn.btn-large:focus,
-.nav-inner .btn.btn-large:hover {
+.nav-inner .btn.btn-large:hover,
+.nav-inner .btn.btn-large.navbar-focus {
   background: linear-gradient(99deg,#437AFF 30%,#50E3C2 100%) !important;
   color: #fff !important;
   box-shadow: 0 2px 23px #4775f522;
   outline: 2.5px solid var(--accent);
+  border: 2.5px solid var(--primary-light);
 }
 
 /* --- nav-active for links and dropdowns --- */
@@ -568,11 +575,12 @@ input:focus, select:focus, textarea:focus {
 
 
 /* Hide native outline but keep focus for accessibility */
-*:focus {
+*:focus, .navbar-focus {
   outline: 2.7px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
   transition: outline 0.13s;
+  border: 2px solid var(--primary-light);
 }
 
 /* Hide scrollbars for cleaner look */

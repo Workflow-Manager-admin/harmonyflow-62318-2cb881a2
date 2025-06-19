@@ -1,16 +1,16 @@
+// PUBLIC_INTERFACE
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 /**
- * ResponsiveNav (Refactored for categorized dropdowns)
- *
- * Groups navigation links into premium, accessible dropdowns by feature category,
- * with enhanced responsive and visual alignment.
- * - Modern dropdowns: Keyboard, touch, mouse accessible.
- * - All items always available (including on mobile).
- * - Premium look, logical grouping, excellent a11y.
+ * ResponsiveNav (Premium Dropdown UX)
+ * 
+ * - Groups feature pages into categorized dropdowns (Productivity, Self-Insight, Integrations, Reports)
+ * - Enhanced accessible dropdowns: fully keyboard navigable, touch-optimized
+ * - Responsive for desktop/mobile, premium styled, clear focus indicators
+ * - Desktop: Hover/tap/click. Keyboard arrow/Esc navigation.
+ * - Mobile: Drawer menu, expandable categories, touch-friendly
  */
-
 // --- Category/feature link mapping from task context ---
 const NAV_CATEGORIES = [
   {
@@ -146,15 +146,29 @@ function DesktopNav({ location }) {
     setDropdownOpen(null);
   }, [location.pathname]);
 
+  // Accessible dropdown menu navigation
   function handleDropdownKey(e, idx) {
-    if (e.key === "Enter" || e.key === " ") setDropdownOpen(dropdownOpen === idx ? null : idx);
-    if (e.key === "ArrowDown" && navBarRef.current) {
-      const dropdown = navBarRef.current.querySelectorAll('.nav-dropdown')[idx];
-      if (dropdown) {
-        const link = dropdown.querySelector('a,button');
-        if (link) link.focus();
-      }
+    if (e.key === "Enter" || e.key === " ") {
+      setDropdownOpen(dropdownOpen === idx ? null : idx);
+      e.preventDefault();
     }
+    if (e.key === "ArrowDown" && navBarRef.current) {
+      // Focus first dropdown link
+      setDropdownOpen(idx);
+      setTimeout(() => {
+        const dropdown = navBarRef.current.querySelectorAll('.nav-dropdown')[idx];
+        if (dropdown) {
+          const link = dropdown.querySelector('a,button');
+          if (link) link.focus();
+        }
+      }, 16);
+      e.preventDefault();
+    }
+    if (e.key === "ArrowUp") {
+      setDropdownOpen(null);
+      e.preventDefault();
+    }
+    if (e.key === "Tab") setDropdownOpen(null);
     if (e.key === "Escape") setDropdownOpen(null);
   }
 
@@ -203,6 +217,7 @@ function DesktopNav({ location }) {
               zIndex: dropdownOpen === idx ? 1021 : 10,
             }}
             onMouseLeave={() => setDropdownOpen(dropdownOpen === idx ? null : dropdownOpen)}
+            onTouchStart={() => setDropdownOpen(idx)}
           >
             <button
               className="btn btn-large"
@@ -230,7 +245,7 @@ function DesktopNav({ location }) {
               }}
               onClick={() => setDropdownOpen(dropdownOpen === idx ? null : idx)}
               onKeyDown={e => handleDropdownKey(e, idx)}
-              onBlur={() => setTimeout(() => setDropdownOpen(null), 120)}
+              onBlur={e => setTimeout(() => { if (!e.currentTarget.contains(document.activeElement)) setDropdownOpen(null); }, 120)}
               type="button"
               tabIndex={0}
             >
@@ -258,11 +273,11 @@ function DesktopNav({ location }) {
                   animation: "nav-dropdown .21s cubic-bezier(.44,.13,.23,1.04)",
                 }}
                 onMouseLeave={() => setDropdownOpen(null)}
-                onBlur={() => setDropdownOpen(null)}
+                onBlur={e => setTimeout(() => { if (!e.currentTarget.contains(document.activeElement)) setDropdownOpen(null); }, 80)}
                 tabIndex={-1}
                 role="menu"
               >
-                {cat.items.map((item) => (
+                {cat.items.map((item, itemIdx) => (
                   <Link
                     key={item.label}
                     to={item.to}
@@ -296,6 +311,17 @@ function DesktopNav({ location }) {
                     title={item.desc}
                     tabIndex={0}
                     onClick={() => setDropdownOpen(null)}
+                    onKeyDown={e => {
+                      if (e.key === "ArrowDown" && itemIdx < cat.items.length - 1) {
+                        e.preventDefault();
+                        e.target.parentNode.children[itemIdx + 1].focus();
+                      } else if (e.key === "ArrowUp" && itemIdx > 0) {
+                        e.preventDefault();
+                        e.target.parentNode.children[itemIdx - 1].focus();
+                      } else if (e.key === "Escape" || e.key === "Tab") {
+                        setDropdownOpen(null);
+                      }
+                    }}
                   >
                     <span style={{ flex: "none", minWidth: 7 }}>&nbsp;</span>
                     <span style={{

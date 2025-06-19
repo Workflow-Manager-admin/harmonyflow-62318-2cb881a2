@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import SurpriseChallengeMode from "./SurpriseChallengeMode";
 import LocalTribeMatching from "./LocalTribeMatching";
 import GlobalImpactMeter from "./GlobalImpactMeter";
@@ -10,32 +10,36 @@ import EmergencyDetoxMode from "./EmergencyDetoxMode";
 import LocalBusinessPartnerships from "./LocalBusinessPartnerships";
 import ChallengeCapsules from "./ChallengeCapsules";
 
+// New core modules
+import GoalMappingDashboard from "./GoalMappingDashboard";
+import AISchedulerOracle from "./AISchedulerOracle";
+import MoodCognitiveTracker from "./MoodCognitiveTracker";
+import UnifiedJournal from "./UnifiedJournal";
+import AILifeCoach from "./AILifeCoach";
+import KPIMetrics from "./KPIMetrics";
+
 // PUBLIC_INTERFACE
 /**
- * ClassicDashboard -- Retrieves the "classic" dashboard layout for HarmonyFlow.
- * Lightweight state for demo; in a real app, use context/api for shared data.
+ * ClassicDashboard -- Main premium dashboard with all primary HarmonyFlow modules as stylized widgets.
  */
 export default function ClassicDashboard() {
-  // Demo state for "goal map", "events", etc. (minimal for static display)
   return (
-    <div
-      style={{
-        padding: "0 0 0 0",
-      }}
-    >
+    <div style={{ padding: 0, width: "100%" }}>
       <h1
         style={{
           color: "var(--primary)",
           fontWeight: 800,
           fontSize: "2.2rem",
-          margin: "13px 0 25px 3px",
-          lineHeight: 1.16,
+          margin: "13px 0 23px 4px",
+          lineHeight: 1.13,
           letterSpacing: "-0.01em",
         }}
+        tabIndex={0}
       >
         My Life Dashboard
       </h1>
       <div
+        className="feature-grid"
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -45,38 +49,48 @@ export default function ClassicDashboard() {
           width: "100%",
         }}
       >
-        <div
+        {/* Left/Primary Column */}
+        <section
           style={{
-            flex: "1 1 395px",
-            minWidth: 310,
-            maxWidth: 499,
+            flex: "1 1 350px",
+            minWidth: 320,
+            maxWidth: 520,
             display: "flex",
             flexDirection: "column",
             gap: "var(--gap-md)",
           }}
+          aria-label="Personal Dashboard Main"
         >
+          <GoalMappingDashboard />
+          <AISchedulerOracle />
+          <MoodCognitiveTracker />
+          <UnifiedJournal />
+          <KPIMetrics />
+        </section>
+        {/* Right/Secondary Column */}
+        <section
+          style={{
+            flex: "1 1 310px",
+            minWidth: 310,
+            maxWidth: 520,
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--gap-md)",
+          }}
+          aria-label="AI, Social, + Habit Challenge Widgets"
+        >
+          <AILifeCoach />
           <SurpriseChallengeMode />
-          <LocalTribeMatching />
-          <CreativityCapsules />
-          <EmergencyDetoxMode />
           <ChallengeCapsules />
-        </div>
-        <div
-          style={{
-            flex: "1 1 395px",
-            minWidth: 310,
-            maxWidth: 499,
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--gap-md)",
-          }}
-        >
+          <CreativityCapsules />
+          <MoodReflectorAI />
           <GlobalImpactMeter />
           <SeasonalTournaments />
+          <EmergencyDetoxMode />
+          <LocalTribeMatching />
           <AnonymousStoryCircles />
-          <MoodReflectorAI />
           <LocalBusinessPartnerships />
-        </div>
+        </section>
       </div>
     </div>
   );

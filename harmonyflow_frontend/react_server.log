@@ -12,24 +12,31 @@ asset index.html 1.98 KiB [emitted]
 runtime modules 28.7 KiB 15 modules
 cacheable modules 1.63 MiB
   modules by path ./node_modules/ 1.54 MiB 34 modules
-  modules by path ./src/ 75.7 KiB
+  modules by path ./src/ 75.6 KiB
     modules by path ./src/features/*.js 40.3 KiB 11 modules
     modules by path ./src/*.css 18.3 KiB 4 modules
-    modules by path ./src/*.js 17.1 KiB
+    modules by path ./src/*.js 17 KiB
       ./src/index.js 530 bytes [built] [code generated]
       + 2 modules
   modules by path ./.ve/ 15.1 KiB
     modules by path ./.ve/*.js 10.6 KiB 2 modules
     modules by path ./.ve/*.css 2.93 KiB 2 modules
     ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 1803 ms
+webpack 5.99.9 compiled successfully in 1697 ms
 assets by status 1.98 KiB [cached] 1 asset
-assets by path *.js 1.84 MiB
-  asset bundle.js 1.82 MiB [emitted] (name: main)
-  asset main.6645678a5b16f74d46aa.hot-update.js 23.2 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.6645678a5b16f74d46aa.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.84 MiB = bundle.js 1.82 MiB main.6645678a5b16f74d46aa.hot-update.js 23.2 KiB
-cached modules 1.61 MiB [cached] 56 modules
+assets by path *.js 1.89 MiB
+  asset bundle.js 1.85 MiB [emitted] (name: main)
+  asset main.693c029053b3d5d6e0cf.hot-update.js 42.8 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.693c029053b3d5d6e0cf.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.89 MiB = bundle.js 1.85 MiB main.693c029053b3d5d6e0cf.hot-update.js 42.8 KiB
+cached modules 1.62 MiB [cached] 56 modules
 runtime modules 28.7 KiB 15 modules
-./src/HarmonyFlowContainer.js 16 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 242 ms
+javascript modules 26.8 KiB
+  ./src/features/ClassicDashboard.js 4.61 KiB [built] [code generated]
+  ./src/features/GoalMappingDashboard.js 4.53 KiB [built] [code generated]
+  ./src/features/AISchedulerOracle.js 4 KiB [built] [code generated]
+  ./src/features/MoodCognitiveTracker.js 3.62 KiB [built] [code generated]
+  ./src/features/UnifiedJournal.js 4.11 KiB [built] [code generated]
+  ./src/features/AILifeCoach.js 3.04 KiB [built] [code generated]
+  ./src/features/KPIMetrics.js 2.85 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 224 ms

@@ -14,17 +14,8 @@ import LocalBusinessPartnerships from "./features/LocalBusinessPartnerships";
 import ChallengeCapsules from "./features/ChallengeCapsules";
 import ClassicDashboard from "./features/ClassicDashboard";
 
-// Theme Colors (light palette from App.css)
-const COLORS = {
-  primary: "#4A90E2",
-  secondary: "#50E3C2",
-  accent: "#F5A623",
-  text: "#222",
-  background: "#F7FAFC",
-  card: "#fff",
-  border: "#EEF2F7",
-  subtleText: "#768394",
-};
+/* No longer using hardcoded COLORS palette here;
+   The color system and all UI must reference :root CSS variables for modern theme. */
 
 // Navigation: define route meta for features
 const FEATURE_PAGES = [
@@ -171,10 +162,11 @@ function NavBar() {
     <nav
       className="navbar"
       style={{
-        background: "var(--primary)",
+        /* Use modern theme --nav-bg and soft shadow for new palette */
+        background: "var(--nav-bg)",
         minHeight: "var(--navbar-height)",
-        borderBottom: "1px solid var(--border-color)",
-        boxShadow: "0 2px 12px 0 rgba(74,144,226,0.04)",
+        borderBottom: "1.5px solid var(--border-light)",
+        boxShadow: "var(--shadow-nav)",
         position: "sticky",
         top: 0,
         width: "100%",
@@ -205,9 +197,10 @@ function NavBar() {
             display: "flex",
             alignItems: "center",
             gap: "9px",
-            letterSpacing: "0.5px",
-            color: "var(--text-on-dark)",
+            letterSpacing: "0.02em",
+            color: "var(--text-nav)",
             userSelect: "none",
+            textShadow: "0 1.5px 9px #7b2ff237"
           }}
         >
           <span
@@ -414,8 +407,8 @@ export default function HarmonyFlowContainer() {
       style={{
         minHeight: "100vh",
         minWidth: 0,
-        background: "var(--background)",
-        color: "var(--text-color)",
+        background: "var(--bg-main)",
+        color: "var(--text-main)",
         width: "100vw",
       }}
     >
@@ -460,7 +453,7 @@ export default function HarmonyFlowContainer() {
             color: "var(--text-secondary)",
             textAlign: "center",
             letterSpacing: "0.01em",
-            opacity: 0.87,
+            opacity: 0.93,
           }}
         >
           <span>

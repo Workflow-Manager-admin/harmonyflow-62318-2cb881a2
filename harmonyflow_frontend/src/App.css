@@ -1,25 +1,26 @@
 :root {
-  /* Premium Brand Palette */
-  --primary: #326cfb;               /* Main brand blue */
-  --primary-light: #b7cdfa;         /* Lighter blue for gradient, backgrounds */
-  --primary-dark: #1a1d2e;          /* Side panel, card bg on dark */
-  --secondary: #43e8d8;             /* Modern teal secondary */
-  --accent: #f7b340;                /* Luxury orange/gold accent */
-  --accent-light: #ffe0ac;          /* Accent for highlights */
-  --danger: #ff5656;
+  /* HarmonyFlow -- Modern Premium Recolor (2024) */
+  --primary: #7B2FF2;               /* Violet (primary brand) */
+  --primary-light: #BFA3FF;         /* Lighter violet for subtle backgrounds */
+  --primary-dark: #43148B;          /* Deep violet for dark text/contrast */
+  --secondary: #22C1C3;             /* Turquoise (secondary) */
+  --secondary-light: #81EAF0;       /* Pale turquoise for gradients/highlights */
+  --accent: #F6416C;                /* Vivid pink (accent) */
+  --accent-light: #FFD2EC;          /* Light accent for glow & highlights */
+  --danger: #E53951;                /* Premium danger red */
 
-  /* Background Layers */
-  --bg-main: linear-gradient(120deg, #e5ebfa 0%, #fcfdff 100%);
-  --bg-soft: #f9fbfe;
-  --card-bg: linear-gradient(120deg,rgba(255,255,255,0.77) 80%,#f4f7fd 100%);
-  --nav-bg: rgba(49,79,165,0.30);
-  --nav-blur: blur(9px);
+  /* Supporting Neutrals - updated for higher contrast */
+  --bg-main: linear-gradient(120deg, #F6F7FB 0%, #ECEAFE 100%);
+  --bg-soft: #F5F5FA;
+  --card-bg: linear-gradient(120deg,rgba(255,255,255,0.94) 85%,#EDEBFB 100%);
+  --nav-bg: rgba(123,47,242,0.11);      /* Subtle violet filter */
+  --nav-blur: blur(10px);
 
-  /* Shadow System */
-  --shadow-xs: 0 1.5px 8px 0 rgba(58,85,193,0.10);
-  --shadow-sm: 0 6px 32px 0 rgba(80,100,140,0.09), 0 2px 14px #5970fa07;
-  --shadow-md: 0 8px 41px 0 rgba(63,93,163,0.13);
-  --shadow-nav: 0 3px 20px 0 rgba(59,125,255,0.13), 0 1px 1.5px #819bc20b;
+  /* Shadow System -- sleek, softened for new colors */
+  --shadow-xs: 0 2px 9px 0 rgba(123,47,242,0.08);
+  --shadow-sm: 0 8px 30px 0 rgba(34,193,195,0.10), 0 2px 16px #22c1c314;
+  --shadow-md: 0 10px 52px 0 rgba(123,47,242,0.10);
+  --shadow-nav: 0 3px 20px 0 rgba(123,47,242,0.13), 0 1.5px 1.5px #22C1C312;
 
   /* Rounding */
   --radius-lg: 24px;
@@ -28,9 +29,9 @@
   --radius-xs: 5px;
 
   /* Border & Separation */
-  --border-light: #e7eaf6;
-  --border-dark: #31375b;
-  --border-accent: #fae6c1;
+  --border-light: #E0DCFA;
+  --border-dark: #3E2465;
+  --border-accent: #FCC5E3;
 
   /* Typography */
   --font-main: 'Inter', 'Roboto', 'Helvetica Neue', Segoe UI, Arial, sans-serif;
@@ -40,11 +41,13 @@
   --h3-size: 1.08rem;
 
   /* Text System */
-  --text-main: #11131c;
-  --text-muted: #6A778B;
+  --text-main: #231330;
+  --text-muted: #7467A8;
   --text-contrast: #fff;
-  --text-nav: #f9fafb;
-  --text-subtle: #afbad0;
+  --text-nav: #FAFAFF;
+  --text-subtle: #C5BADB;
+  --text-secondary: #7157B5;
+  --text-on-dark: #F2ECFF;
 
   /* Spacing (vertical rhythm/grid) */
   --gap-xl: 42px;

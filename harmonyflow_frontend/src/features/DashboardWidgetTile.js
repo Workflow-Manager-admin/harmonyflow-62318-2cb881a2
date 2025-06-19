@@ -20,17 +20,18 @@ export default function DashboardWidgetTile({
   const ACCENTS = {
     primary: "var(--primary)",
     secondary: "var(--secondary)",
+    secondaryLight: "var(--secondary-light)",
     accent: "var(--accent)",
-    focus: "#43e8d8",
-    gold: "#f7b340",
+    focus: "var(--secondary)",
+    gold: "var(--accent)",
     warning: "var(--danger)",
-    kpi: "#5d66d8",
-    mood: "#f7b340",
-    coach: "#43e8d8",
-    journal: "#326cfb",
-    schedule: "#326cfb",
-    goal: "#43e8d8",
-    kpi2: "#afbad0",
+    kpi: "#A685F5",    // light violet for metrics
+    mood: "var(--secondary)",
+    coach: "var(--secondary)",
+    journal: "var(--primary-dark)",
+    schedule: "var(--primary)",
+    goal: "var(--accent)",
+    kpi2: "var(--text-subtle)",
     // Add more as needed
   };
   const accentColor = ACCENTS[accent] || "var(--primary)";

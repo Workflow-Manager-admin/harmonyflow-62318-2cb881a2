@@ -114,6 +114,110 @@ body {
   border-radius: 0 0 28px 28px;
 }
 
+/* Responsive, scrollable nav bar container */
+.nav-scroll-container {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  /* max-width: 100vw; */
+  overflow-x: auto;
+  padding-left: 17px;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Hide scrollbar but allow scroll */
+.nav-scroll-container::-webkit-scrollbar,
+.nav-inner::-webkit-scrollbar {
+  height: 0.4em;
+  background: transparent;
+}
+.nav-scroll-container,
+.nav-inner {
+  scrollbar-width: thin;
+  scrollbar-color: #b8e3f9 transparent;
+}
+
+/* More dropdown styling */
+.nav-more-btn:focus,
+.nav-more-btn:hover {
+  background: linear-gradient(96deg,#437AFF 78%,#50E3C2 100%);
+  color: #fff;
+  filter: brightness(1.09);
+}
+
+.nav-more-menu {
+  animation: nav-dropdown 0.20s cubic-bezier(.47,.09,.44,1.28);
+}
+@keyframes nav-dropdown {
+  from { transform: translateY(-10px); opacity: 0.1; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.nav-active, .nav-active:focus, .nav-active:hover {
+  box-shadow: 0 2.5px 27px #4775f544 !important;
+  background: linear-gradient(98deg,#437AFF 3%,#50E3C2 97%) !important;
+  color: #fff !important;
+}
+
+@media (max-width: 1400px) {
+  .navbar { padding-left: 20px; padding-right: 20px; }
+  .nav-inner { gap: 4px; }
+}
+
+@media (max-width: 900px) {
+  .navbar { padding-left: 4px; padding-right: 4px;}
+  .nav-inner { gap: 2px;}
+}
+
+/* Responsive—stack on mobile */
+@media (max-width: 700px) {
+  .nav-scroll-container, .nav-inner {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+  .navbar { flex-direction: column; align-items: stretch; }
+  .nav-inner { flex-wrap: nowrap; overflow-x: auto; }
+}
+
+@media (max-width: 440px) {
+  .nav-scroll-container, .nav-inner {
+    padding-left: 1px; padding-right: 1px;
+  }
+}
+
+/* Prevent dropdown from being limited by parent scroll */
+.nav-more-menu {
+  position: absolute !important;
+}
+
+/* Style Link 'btn's inside nav for better fit */
+.nav-inner .btn, .nav-inner .btn-outline, .nav-inner .btn-accent, .nav-inner .btn-large {
+  min-width: 0 !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Style More dropdown items */
+.nav-more-menu .btn,
+.nav-more-menu .btn-outline,
+.nav-more-menu .btn-accent,
+.nav-more-menu .btn-large {
+  box-shadow: none !important;
+  border: none !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  border-radius: 0 !important;
+  background: none !important;
+  color: var(--primary-light) !important;
+}
+
 /* --- Brand Logo --- */
 .logo {
   font-size: 1.6rem;

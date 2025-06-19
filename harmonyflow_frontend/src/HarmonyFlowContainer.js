@@ -2,19 +2,6 @@ import React from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
 
-// Theme Colors (light palette from App.css)
-const COLORS = {
-  primary: "#4A90E2",
-  secondary: "#50E3C2",
-  accent: "#F5A623",
-  text: "#222",
-  background: "#F7FAFC",
-  card: "#fff",
-  border: "#EEF2F7",
-  subtleText: "#768394",
-};
-
-// Feature page imports (must match filenames exactly)
 import SurpriseChallengeMode from "./features/SurpriseChallengeMode";
 import LocalTribeMatching from "./features/LocalTribeMatching";
 import GlobalImpactMeter from "./features/GlobalImpactMeter";
@@ -26,6 +13,18 @@ import EmergencyDetoxMode from "./features/EmergencyDetoxMode";
 import LocalBusinessPartnerships from "./features/LocalBusinessPartnerships";
 import ChallengeCapsules from "./features/ChallengeCapsules";
 import ClassicDashboard from "./features/ClassicDashboard";
+
+// Theme Colors (light palette from App.css)
+const COLORS = {
+  primary: "#4A90E2",
+  secondary: "#50E3C2",
+  accent: "#F5A623",
+  text: "#222",
+  background: "#F7FAFC",
+  card: "#fff",
+  border: "#EEF2F7",
+  subtleText: "#768394",
+};
 
 // Navigation: define route meta for features
 const FEATURE_PAGES = [

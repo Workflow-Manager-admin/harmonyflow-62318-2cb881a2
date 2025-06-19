@@ -1,9 +1,6 @@
 import React, { useState } from "react";
+import DashboardWidgetTile from "./DashboardWidgetTile";
 
-/**
- * UnifiedJournal
- * Demo journal/reflection with session-based entry state.
- */
 // PUBLIC_INTERFACE
 export default function UnifiedJournal() {
   const [entry, setEntry] = useState("");
@@ -18,26 +15,19 @@ export default function UnifiedJournal() {
     setEntry("");
   }
   return (
-    <section
-      className="feature-card"
-      style={{
-        minHeight: 140,
-        background: "var(--card-bg)",
-        borderRadius: "var(--radius-lg)",
-        padding: "26px 24px 15px 24px",
-        marginBottom: 14,
-        boxShadow: "var(--shadow-md)",
-      }}
+    <DashboardWidgetTile
+      icon="📓"
+      title="Unified Journal + Reflection"
+      accent="journal"
+      desc={
+        <>
+          Jot growth moments, ideas, or reflect.<br />
+          <span style={{ color: "var(--text-subtle)", fontSize: 13 }}>Daily summaries and suggestions soon!</span>
+        </>
+      }
+      style={{ minHeight: 140, marginBottom: 14 }}
       aria-label="Unified Journal and Reflection"
-      tabIndex={0}
     >
-      <h3 className="card-title" style={{ color: "var(--primary)" }}>
-        📓 Unified Journal + Reflection
-      </h3>
-      <div className="card-desc" style={{ color: "var(--text-muted)" }}>
-        Jot growth moments, ideas, or reflect.<br />
-        <span style={{ color: "var(--text-subtle)", fontSize: 13 }}>Daily summaries and suggestions soon!</span>
-      </div>
       <form onSubmit={addEntry} style={{ margin: "13px 0 8px 0" }}>
         <textarea
           aria-label="New journal entry"
@@ -74,6 +64,6 @@ export default function UnifiedJournal() {
         ))}
         {history.length === 0 && <li>No entries yet.</li>}
       </ul>
-    </section>
+    </DashboardWidgetTile>
   );
 }

@@ -1,9 +1,6 @@
 import React from "react";
+import DashboardWidgetTile from "./DashboardWidgetTile";
 
-/**
- * KPIMetrics
- * Tracks demo sleep, focus hours, and more in motivational visual.
- */
 // PUBLIC_INTERFACE
 export default function KPIMetrics() {
   const metrics = {
@@ -15,24 +12,19 @@ export default function KPIMetrics() {
   };
 
   return (
-    <section
-      className="feature-card"
-      style={{
-        minHeight: 110,
-        background: "var(--card-bg)",
-        borderRadius: "var(--radius-lg)",
-        padding: "23px 24px 13px 24px",
-        marginBottom: 9,
-        boxShadow: "var(--shadow-md)",
-        display: "flex",
-        flexDirection: "column",
-      }}
+    <DashboardWidgetTile
+      icon="📈"
+      title="KPI & Focus Metrics"
+      accent="kpi"
+      desc={
+        <>
+          <span role="img" aria-label="insight">✨</span>
+          {" "}Tracking for progress and self-mastery.
+        </>
+      }
+      style={{ minHeight: 110, marginBottom: 9 }}
       aria-label="KPI and Focus Metrics"
-      tabIndex={0}
     >
-      <h3 className="card-title" style={{ color: "var(--primary)", marginBottom: 3 }}>
-        📈 KPI & Focus Metrics
-      </h3>
       <div
         style={{
           display: "flex",
@@ -51,10 +43,6 @@ export default function KPIMetrics() {
         <span style={{ color: "#50E3C2" }}>{metrics.habits} Habits</span>
         <span style={{ color: "#768394" }}>🔥 {metrics.streak}d streak</span>
       </div>
-      <div style={{ marginTop: 7, fontSize: 13, color: "var(--text-muted)" }}>
-        <span role="img" aria-label="insight">✨</span>
-        Tracking for progress and self-mastery.
-      </div>
-    </section>
+    </DashboardWidgetTile>
   );
 }

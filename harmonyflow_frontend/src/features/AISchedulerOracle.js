@@ -1,9 +1,6 @@
 import React, { useState } from "react";
+import DashboardWidgetTile from "./DashboardWidgetTile";
 
-/**
- * AISchedulerOracle
- * Simulates an AI-powered schedule summary and burnout prediction.
- */
 // PUBLIC_INTERFACE
 export default function AISchedulerOracle() {
   const [state] = useState({
@@ -20,25 +17,18 @@ export default function AISchedulerOracle() {
   });
 
   return (
-    <section
-      className="feature-card"
-      style={{
-        minHeight: 160,
-        background: "var(--card-bg)",
-        borderRadius: "var(--radius-lg)",
-        padding: "26px 28px 17px 28px",
-        marginBottom: 20,
-        boxShadow: "var(--shadow-md)",
-      }}
+    <DashboardWidgetTile
+      icon="⏱️"
+      title="AI Scheduler & Time Oracle"
+      accent="schedule"
+      desc={
+        <>
+          Your day, intelligently organized. <b>AI will reschedule</b> and warn when burnout is predicted.
+        </>
+      }
+      style={{ minHeight: 160, marginBottom: 20 }}
       aria-label="AI Scheduler & Time Oracle"
-      tabIndex={0}
     >
-      <h3 className="card-title" style={{ color: "var(--secondary)" }}>
-        ⏱️ AI Scheduler & Time Oracle
-      </h3>
-      <div className="card-desc" style={{ color: "var(--text-muted)", marginBottom: 13 }}>
-        Your day, intelligently organized. <b>AI will reschedule</b> and warn when burnout is predicted.
-      </div>
       <div role="table" aria-label="Today's Schedule" style={{ marginBottom: 12 }}>
         {state.today.map((ev, i) => (
           <div key={i} role="row" style={{ display: "flex", alignItems: "center", gap: 13, marginBottom: 5 }}>
@@ -54,6 +44,6 @@ export default function AISchedulerOracle() {
       <div className="card-desc" style={{ color: "var(--text-muted)", fontStyle: "italic", fontSize: 13.5 }}>
         {state.aiAdvice}
       </div>
-    </section>
+    </DashboardWidgetTile>
   );
 }

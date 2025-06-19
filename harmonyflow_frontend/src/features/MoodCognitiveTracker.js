@@ -1,9 +1,6 @@
 import React, { useState } from "react";
+import DashboardWidgetTile from "./DashboardWidgetTile";
 
-/**
- * MoodCognitiveTracker
- * Logs mood and (demo) cognitive states with a chart placeholder.
- */
 // PUBLIC_INTERFACE
 export default function MoodCognitiveTracker() {
   const [trend] = useState([
@@ -16,25 +13,14 @@ export default function MoodCognitiveTracker() {
     { day: "Sun", mood: 3, note: "Relaxed" },
   ]);
   return (
-    <section
-      className="feature-card"
-      style={{
-        minHeight: 155,
-        background: "var(--card-bg)",
-        borderRadius: "var(--radius-lg)",
-        padding: "24px 26px 13px 26px",
-        marginBottom: 18,
-        boxShadow: "var(--shadow-md)",
-      }}
+    <DashboardWidgetTile
+      icon="🧠"
+      title="Mood & Cognitive State Tracker"
+      accent="mood"
+      desc="Track your mood and mental focus over time."
+      style={{ minHeight: 155, marginBottom: 18 }}
       aria-label="Mood and Cognitive State Tracker"
-      tabIndex={0}
     >
-      <h3 className="card-title" style={{ color: "var(--accent)", marginBottom: 3 }}>
-        🧠 Mood & Cognitive State Tracker
-      </h3>
-      <div className="card-desc" style={{ color: "var(--text-muted)" }}>
-        Track your mood and mental focus over time.
-      </div>
       {/* Mood chart placeholder */}
       <div
         style={{
@@ -74,6 +60,6 @@ export default function MoodCognitiveTracker() {
       <div style={{ marginTop: 4, fontSize: 13, color: "#768394" }}>
         Recent cognitive note: <b>{trend[trend.length - 1].note}</b>
       </div>
-    </section>
+    </DashboardWidgetTile>
   );
 }

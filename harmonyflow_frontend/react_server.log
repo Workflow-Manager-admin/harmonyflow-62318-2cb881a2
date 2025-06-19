@@ -7,13 +7,13 @@
 <i> [webpack-dev-server] On Your Network (IPv4): http://172.17.0.2:3000/
 <i> [webpack-dev-server] Content not from webpack is served from './public' directory
 Injecting EditorRootWrapper import: ../.ve/EditorRootWrapper
-asset bundle.js 1.96 MiB [emitted] (name: main)
+asset bundle.js 1.95 MiB [emitted] (name: main)
 asset index.html 1.98 KiB [emitted]
 runtime modules 28.7 KiB 15 modules
-cacheable modules 1.74 MiB
+cacheable modules 1.73 MiB
   modules by path ./node_modules/ 1.54 MiB 34 modules
-  modules by path ./src/ 191 KiB
-    modules by path ./src/*.js 162 KiB 15 modules
+  modules by path ./src/ 183 KiB
+    modules by path ./src/*.js 154 KiB 14 modules
     modules by path ./src/*.css 29.4 KiB
       ./src/index.css 2.23 KiB [built] [code generated]
       + 5 modules
@@ -23,54 +23,64 @@ cacheable modules 1.74 MiB
       ./.ve/EditorOverlay.css 2.25 KiB [built] [code generated]
       ./node_modules/css-loader/dist/cjs.js!./.ve/EditorOverlay.css 697 bytes [built] [code generated]
     ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 1640 ms
-assets by status 1.98 KiB [cached] 1 asset
-assets by path *.js 1.96 MiB
-  asset bundle.js 1.95 MiB [emitted] (name: main)
-  asset main.86387bd940f318570e12.hot-update.js 10.5 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.86387bd940f318570e12.hot-update.json 60 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.96 MiB = bundle.js 1.95 MiB main.86387bd940f318570e12.hot-update.js 10.5 KiB
-cached modules 1.73 MiB [cached] 58 modules
-runtime modules 28.7 KiB 15 modules
-./src/App.js 4.59 KiB [code generated]
-
-ERROR in ./src/App.js 72:54-96
-Module not found: Error: Can't resolve './LifeEventChainTracker' in '/home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/src'
-resolve './LifeEventChainTracker' in '/home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/src'
-  using description file: /home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/package.json (relative path: ./src)
-    Field 'browser' doesn't contain a valid alias configuration
-    using description file: /home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/package.json (relative path: ./src/LifeEventChainTracker)
-      no extension
-        Field 'browser' doesn't contain a valid alias configuration
-        /home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/src/LifeEventChainTracker doesn't exist
-      .js
-        Field 'browser' doesn't contain a valid alias configuration
-        /home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/src/LifeEventChainTracker.js doesn't exist
-      .jsx
-        Field 'browser' doesn't contain a valid alias configuration
-        /home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/src/LifeEventChainTracker.jsx doesn't exist
-      as directory
-        /home/kavia/workspace/code-generation/harmonyflow-62318-2cb881a2/harmonyflow_frontend/src/LifeEventChainTracker doesn't exist
- @ ./src/index.js 5:0-24 11:32-35
-
-webpack 5.99.9 compiled with 1 error in 94 ms
-assets by status 1.98 KiB [cached] 1 asset
-assets by path *.js 1.96 MiB
-  asset bundle.js 1.95 MiB [emitted] (name: main)
-  asset main.c3689a053fac7ad86edd.hot-update.js 9.54 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.c3689a053fac7ad86edd.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.96 MiB = bundle.js 1.95 MiB main.c3689a053fac7ad86edd.hot-update.js 9.54 KiB
-cached modules 1.73 MiB [cached] 58 modules
-runtime modules 28.7 KiB 15 modules
-./src/App.js 4.15 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 80 ms
+webpack 5.99.9 compiled successfully in 1690 ms
 assets by status 1.98 KiB [cached] 1 asset
 assets by path *.js 1.97 MiB
   asset bundle.js 1.95 MiB [emitted] (name: main)
-  asset main.0b7d60482f8b3cac6cd6.hot-update.js 21.1 KiB [emitted] [immutable] [hmr] (name: main)
-asset main.0b7d60482f8b3cac6cd6.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.97 MiB = bundle.js 1.95 MiB main.0b7d60482f8b3cac6cd6.hot-update.js 21.1 KiB
+  asset main.20f0c5ecc01cc78b03c4.hot-update.js 21.8 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.20f0c5ecc01cc78b03c4.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.97 MiB = bundle.js 1.95 MiB main.20f0c5ecc01cc78b03c4.hot-update.js 21.8 KiB
 cached modules 1.72 MiB [cached] 58 modules
 runtime modules 28.7 KiB 15 modules
-./src/ResponsiveNav.js 16.6 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 121 ms
+./src/ResponsiveNav.js 17.2 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 173 ms
+assets by status 1.98 KiB [cached] 1 asset
+assets by path *.js 1.96 MiB
+  asset bundle.js 1.95 MiB [emitted] (name: main)
+  asset main.f8ca5f2417a2e1e00143.hot-update.js 15.4 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.f8ca5f2417a2e1e00143.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.96 MiB = bundle.js 1.95 MiB main.f8ca5f2417a2e1e00143.hot-update.js 15.4 KiB
+cached modules 1.72 MiB [cached] 58 modules
+runtime modules 28.7 KiB 15 modules
+./node_modules/css-loader/dist/cjs.js!./src/App.css 12.6 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 68 ms
+assets by status 1.98 KiB [cached] 1 asset
+assets by path *.js 1.97 MiB
+  asset bundle.js 1.95 MiB [emitted] (name: main)
+  asset main.420534f6a23217ce7db2.hot-update.js 15.5 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.420534f6a23217ce7db2.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.97 MiB = bundle.js 1.95 MiB main.420534f6a23217ce7db2.hot-update.js 15.5 KiB
+cached modules 1.72 MiB [cached] 58 modules
+runtime modules 28.7 KiB 15 modules
+./node_modules/css-loader/dist/cjs.js!./src/App.css 12.7 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 68 ms
+assets by status 1.98 KiB [cached] 1 asset
+assets by path *.js 1.97 MiB
+  asset bundle.js 1.95 MiB [emitted] (name: main)
+  asset main.a1422aec277c67161eea.hot-update.js 16.2 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.a1422aec277c67161eea.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.97 MiB = bundle.js 1.95 MiB main.a1422aec277c67161eea.hot-update.js 16.2 KiB
+cached modules 1.72 MiB [cached] 58 modules
+runtime modules 28.7 KiB 15 modules
+./node_modules/css-loader/dist/cjs.js!./src/App.css 13.3 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 62 ms
+assets by status 1.98 KiB [cached] 1 asset
+assets by path *.js 1.97 MiB
+  asset bundle.js 1.95 MiB [emitted] (name: main)
+  asset main.a02130d70110c888f452.hot-update.js 16.2 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.a02130d70110c888f452.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.97 MiB = bundle.js 1.95 MiB main.a02130d70110c888f452.hot-update.js 16.2 KiB
+cached modules 1.72 MiB [cached] 58 modules
+runtime modules 28.7 KiB 15 modules
+./node_modules/css-loader/dist/cjs.js!./src/App.css 13.3 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 38 ms
+assets by status 1.98 KiB [cached] 1 asset
+assets by path *.js 1.97 MiB
+  asset bundle.js 1.95 MiB [emitted] (name: main)
+  asset main.c207a99bd92b4212b03b.hot-update.js 16.2 KiB [emitted] [immutable] [hmr] (name: main)
+asset main.c207a99bd92b4212b03b.hot-update.json 28 bytes [emitted] [immutable] [hmr]
+Entrypoint main 1.97 MiB = bundle.js 1.95 MiB main.c207a99bd92b4212b03b.hot-update.js 16.2 KiB
+cached modules 1.72 MiB [cached] 58 modules
+runtime modules 28.7 KiB 15 modules
+./node_modules/css-loader/dist/cjs.js!./src/App.css 13.3 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 37 ms

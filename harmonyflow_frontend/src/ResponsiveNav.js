@@ -328,23 +328,37 @@ function ResponsiveNav() {
             className={nav.className + (location.pathname === nav.to ? " nav-active" : "")}
             style={{
               ...nav.style,
-              marginRight: 8,
+              marginRight: 10,
               display: visible.includes(idx) ? "" : "none",
               whiteSpace: "nowrap",
-              maxWidth: 210,
-              overflow: "hidden",
-              textOverflow: "ellipsis"
+              minWidth: 135,
+              maxWidth: "unset",
+              overflow: "visible",
+              textOverflow: "unset",
+              paddingLeft: 22,
+              paddingRight: 22,
+              fontSize: "1.06em",
+              letterSpacing: 0.01,
+              boxSizing: "border-box"
             }}
             tabIndex={0}
             aria-current={location.pathname === nav.to ? "page" : undefined}
             aria-label={nav.label}
+            title={nav.label.length > 18 ? nav.label : undefined}
             data-index={idx}
             onKeyDown={e => handleNavKey(e, idx)}
           >
-            {nav.label}
+            <span style={{
+              display: "inline-block",
+              whiteSpace: "nowrap",
+              overflow: "visible",
+              textOverflow: "clip",
+              verticalAlign: "middle"
+            }}>
+              {nav.label}
+            </span>
           </Link>
-        ))}
-        {overflowed.length > 0 && (
+        ))}        {overflowed.length > 0 && (
           <div
             className="nav-more-btn"
             ref={moreBtnRef}

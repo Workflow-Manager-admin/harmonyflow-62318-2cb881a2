@@ -260,22 +260,26 @@ function DesktopNav({ location }) {
                 className="nav-dropdown"
                 style={{
                   position: "absolute",
-                  top: "120%",
+                  top: "100%",
                   left: 0,
                   minWidth: 244,
-                  maxWidth: 340,
+                  maxWidth: 360,
                   background: "#fff",
-                  boxShadow: "0 8px 37px #4A90E244",
+                  boxShadow: "0 8px 44px #4A90E260, 0 2px 17px #437AFF28",
                   borderRadius: 13,
                   border: "1.4px solid #e0eafe",
-                  marginTop: 5,
-                  zIndex: 1022,
+                  marginTop: 6,
+                  zIndex: 2003,
                   animation: "nav-dropdown .21s cubic-bezier(.44,.13,.23,1.04)",
+                  display: "block"
                 }}
+                onMouseEnter={() => setDropdownOpen(idx)}
                 onMouseLeave={() => setDropdownOpen(null)}
+                onFocus={() => setDropdownOpen(idx)}
                 onBlur={e => setTimeout(() => { if (!e.currentTarget.contains(document.activeElement)) setDropdownOpen(null); }, 80)}
                 tabIndex={-1}
                 role="menu"
+                aria-hidden={dropdownOpen !== idx}
               >
                 {cat.items.map((item, itemIdx) => (
                   <Link

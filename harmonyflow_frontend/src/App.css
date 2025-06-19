@@ -172,6 +172,10 @@ body {
   min-width: 210px;
   max-width: 350px;
   transition: box-shadow 0.17s;
+  position: absolute !important;
+  z-index: 2004 !important;
+  display: block;
+  pointer-events: auto;
 }
 
 @keyframes nav-dropdown {

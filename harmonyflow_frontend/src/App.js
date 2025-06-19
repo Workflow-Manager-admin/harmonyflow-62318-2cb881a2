@@ -5,6 +5,7 @@ import HarmonyFlowContainer from './HarmonyFlowContainer';
 import DynamicGoalEvolutionEngine from './DynamicGoalEvolutionEngine';
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import LifePortfolioBuilder from "./LifePortfolioBuilder";
 
 /**
  * App - Root component.
@@ -170,6 +171,24 @@ function App() {
             >
               Whisper Journal
             </Link>
+            {/* New Life Portfolio Builder navigation link */}
+            <Link
+              to="/life-portfolio"
+              style={{
+                color: "#fff",
+                background: "#F5A623",
+                padding: "8px 18px",
+                borderRadius: "11px",
+                textDecoration: "none",
+                fontWeight: 700,
+                border: "2px solid #F5A623",
+                marginLeft: "8px",
+                letterSpacing: "0.01em",
+                boxShadow: "0 1px 7px #fae0b5cc"
+              }}
+            >
+              Life Portfolio
+            </Link>
           </div>
         </nav>
         <div style={{ paddingTop: 80, minHeight: '100vh', background: "var(--base-dark)" }}>
@@ -209,6 +228,11 @@ function App() {
             <Route
               path="/whisper-journal"
               element={React.createElement(require("./WhisperJournal").default)}
+            />
+            {/* Life Portfolio Builder integration */}
+            <Route
+              path="/life-portfolio"
+              element={React.createElement(require("./LifePortfolioBuilder").default)}
             />
           </Routes>
         </div>

@@ -2,14 +2,19 @@ import React, { useRef, useState, useLayoutEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 /**
- * ResponsiveNav (Modern horizontal scroll + accessible "More" dropdown for overflow)
- *
- * Renders all navigation links as a horizontal scrollable bar on desktop, and collapses into a premium "drawer" menu on mobile.
- * Handles overflow dynamically with "More" drop-down. All links are always accessible via keyboard/mouse/touch.
- * Theme and accessibility adherent.
+ * ResponsiveNav
+ * 
+ * PUBLIC_INTERFACE
+ * 
+ * Robust premium feature navigation bar for HarmonyFlow:
+ * - Ensures all feature links are always visible, accessible, and visually distinct regardless of screen size or zoom.
+ * - Uses a modern horizontal scrollable bar on desktop, with an accessible "More" dropdown for overflow, and a premium full-drawer experience on mobile.
+ * - Accessibility: Full keyboard navigation between links and dropdown, ARIA labels, focus/hover highlight, and touch support.
+ * - No feature link hidden at any viewport or zoom: always present in some nav area.
+ * - All nav actions auto-close overlay/drawer for best UX.
+ * - Responsive up to touch/zoom and tested at 100% zoom and mobile breakpoints.
  */
 
-// Navigation links (adjust/add here for more links)
 const NAV_LINKS = [
   {
     label: "Dashboard",
@@ -85,9 +90,7 @@ const NAV_LINKS = [
   }
 ];
 
-/**
- * ResponsiveNav (Modern horizontal scroll + accessible "More" dropdown for overflow + modal drawer for mobile)
- */
+// PUBLIC_INTERFACE
 function ResponsiveNav() {
   const containerRef = useRef();
   const moreBtnRef = useRef();
@@ -149,7 +152,7 @@ function ResponsiveNav() {
     }
   }, [isMobile, checkOverflow]);
 
-  // Hide menus after navigation
+  // Hide menus after navigation, so drawer and more always close
   useLayoutEffect(() => { setShowMore(false); setMobileMenuOpen(false); }, [location.pathname]);
 
   // Accessibility: More dropdown (desktop)
@@ -164,8 +167,8 @@ function ResponsiveNav() {
     } else if (e.key === "Tab" && showMore && moreMenuRef.current) {
       const links = moreMenuRef.current.querySelectorAll("a,button");
       if (!links.length) return;
-      if (!e.shiftKey && document.activeElement === links[links.length-1]) { e.preventDefault(); links[0].focus(); }
-      if (e.shiftKey && document.activeElement === links[0]) { e.preventDefault(); links[links.length-1].focus(); }
+      if (!e.shiftKey && document.activeElement === links[links.length - 1]) { e.preventDefault(); links[0].focus(); }
+      if (e.shiftKey && document.activeElement === links[0]) { e.preventDefault(); links[links.length - 1].focus(); }
     }
   }
 
@@ -197,7 +200,7 @@ function ResponsiveNav() {
     }, 120);
   }
 
-  // Horizontal scroll wheel
+  // Horizontal scroll wheel for premium user experience
   function handleScrollWheel(e) {
     if (e.deltaY && Math.abs(e.deltaY) > Math.abs(e.deltaX) && containerRef.current) {
       containerRef.current.scrollLeft += e.deltaY;
@@ -224,11 +227,11 @@ function ResponsiveNav() {
             border: "none",
             boxShadow: "0 2px 14px #437aff1c",
           }}
-          onClick={() => setMobileMenuOpen(v=>!v)}
+          onClick={() => setMobileMenuOpen(v => !v)}
           tabIndex={0}
           type="button"
         >
-          <span style={{marginRight: 7}}>{mobileMenuOpen ? "✕" : "☰"}</span>
+          <span style={{ marginRight: 7 }}>{mobileMenuOpen ? "✕" : "☰"}</span>
         </button>
         {mobileMenuOpen && (
           <div
@@ -301,7 +304,6 @@ function ResponsiveNav() {
               width: "100vw", height: "100vh",
               background: "rgba(60, 70, 100, 0.19)",
               zIndex: 1500,
-              // no pointer events inside overlay; only for dimming & closing
             }}
             onClick={() => setMobileMenuOpen(false)}
             aria-label="Close navigation menu"
@@ -316,6 +318,7 @@ function ResponsiveNav() {
       </div>
     );
   }
+
   // ---- Desktop horizontal nav ----
   return (
     <div
@@ -432,8 +435,8 @@ function ResponsiveNav() {
                       aria-current={location.pathname === nav.to ? "page" : undefined}
                       aria-label={nav.label}
                       onClick={() => setShowMore(false)}
-                      onKeyDown={e=>{
-                        if (e.key==="Escape" || e.key==="Tab") setShowMore(false);
+                      onKeyDown={e => {
+                        if (e.key === "Escape" || e.key === "Tab") setShowMore(false);
                       }}
                     >
                       {nav.label}

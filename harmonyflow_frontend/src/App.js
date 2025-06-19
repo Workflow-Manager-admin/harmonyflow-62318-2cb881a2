@@ -38,12 +38,26 @@ function App() {
               }}>
               Dynamic Goal Evolution
             </Link>
+            <Link
+              to="/archetype-quiz"
+              style={{
+                color: "#4A90E2",
+                background: "#fff",
+                padding: "6px 13px",
+                borderRadius: "8px",
+                textDecoration: "none",
+                fontWeight: 500,
+                border: "2px solid var(--base-light)"
+              }}>
+              Archetype Quiz
+            </Link>
           </div>
         </nav>
         <div style={{ paddingTop: 80, minHeight: '100vh', background: "var(--base-dark)" }}>
           <Routes>
             <Route path="/" element={<HarmonyFlowContainer />} />
             <Route path="/goal-evolution" element={<DynamicGoalEvolutionEngine />} />
+            <Route path="/archetype-quiz" element={React.createElement(require("./PersonalityArchetypeQuiz").default)} />
           </Routes>
         </div>
       </div>

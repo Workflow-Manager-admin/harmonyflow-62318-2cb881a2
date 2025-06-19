@@ -51,19 +51,19 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Customization
 
+### Fonts
+
+The premium look uses modern web fonts: **Inter** and **Roboto** as primary display fonts.
+To ensure best rendering, update your HTML head with:
+```html
+<link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+```
+(See main app index.html or adjust with your static serving pipeline.)
+
 ### Colors
 
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+The main brand colors and spacings are now defined as CSS variables in `src/App.css`:
 
 ### Components
 

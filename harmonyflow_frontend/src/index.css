@@ -1,19 +1,42 @@
-/* Base resets and coding styles */
-* {
+/* Base resets + global premium font */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: 'Inter', 'Roboto', 'Source Sans Pro', Arial, sans-serif;
+  background: var(--outer-bg, #171c26);
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', 'Roboto', 'Source Sans Pro', Arial, sans-serif;
+  background: var(--outer-bg, #171c26);
+  color: var(--text-color, #232947);
+  min-height: 100vh;
+  font-size: 18px;
+  font-weight: 410;
+  letter-spacing: 0.009em;
+  line-height: 1.58;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+a {
+  color: var(--primary-light, #4A90E2);
+  text-decoration: none;
+  font-weight: 600;
+}
+a:hover, a:focus {
+  color: var(--secondary, #50E3C2);
+  text-shadow: 0 2px 11px #437AFF33;
 }

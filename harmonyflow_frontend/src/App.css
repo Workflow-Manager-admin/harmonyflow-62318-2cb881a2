@@ -139,14 +139,14 @@ a {
   margin-right: 2px;
 }
 
-/* Modern nav links */
-.nav-dropdown button, .navbar .container > a, .nav-dropdown > button {
-  font-size: 1.025rem;
+/* Modern nav links (updated for explicit high-contrast and accessibility) */
+.navbar-navlink,
+.navbar .container > a.navbar-navlink {
+  font-size: 1.03rem;
   font-weight: 600;
   color: var(--text-nav);
   background: none;
   border: none;
-  cursor: pointer;
   border-radius: var(--radius-sm);
   padding: 11px 22px;
   margin: 0 3px;
@@ -154,29 +154,93 @@ a {
   outline: none;
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  min-width: 108px;
+  gap: 9px;
 }
-.nav-dropdown button:focus, .navbar .container > a:focus, .nav-dropdown > button:focus {
+
+.navbar-navlink .navbar-navlink-icon {
+  font-size: 1.19rem;
+  color: var(--text-nav);
+  filter: drop-shadow(0 1px 0 #23233b2c);
+  min-width: 23px;
+  opacity: 0.91;
+  vertical-align: -2px;
+}
+
+.navbar-navlink:focus-visible,
+.navbar-navlink:focus {
   background: var(--secondary);
-  color: #222;
+  color: var(--primary-dark);
   box-shadow: 0 0 0 3.5px #21e3c975;
+  outline: none;
 }
-.nav-dropdown > button[aria-expanded="true"] {
+.navbar-navlink:hover {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+.navbar-navlink.active,
+.navbar-navlink[aria-current="page"] {
   background: var(--secondary);
-  color: var(--primary);
-  box-shadow: 0 8px 32px #43e8d812;
+  color: var(--primary-dark);
+  box-shadow: 0 6px 22px #43e8d812, 0 0.7px 2.2px #2f155911;
 }
-.nav-dropdown > button:hover, .navbar .container > a:hover {
+
+/* Dropdown button classes for nav */
+.navbar-dropdown-btn {
+  font-size: 1.01rem;
+  font-weight: 600;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-nav);
+  padding: 11px 22px;
+  margin: 0 3px;
+  transition: background var(--tr-fast), color var(--tr-fast), box-shadow var(--tr-fast);
+  outline: none;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 120px;
+  cursor: pointer;
+}
+.navbar-dropdown-btn .navbar-navlink-icon {
+  font-size: 1.21rem;
+  color: var(--text-nav);
+}
+.navbar-dropdown-btn .navbar-dropdown-arrow {
+  color: var(--text-nav);
+  opacity: 0.74;
+}
+.navbar-dropdown-btn:focus-visible,
+.navbar-dropdown-btn:focus {
+  background: var(--secondary);
+  color: var(--primary-dark);
+  box-shadow: 0 0 0 3.5px #21e3c975;
+  outline: none;
+}
+.navbar-dropdown-btn.active,
+.navbar-dropdown-btn[aria-expanded="true"] {
+  background: var(--secondary);
+  color: var(--primary-dark);
+  box-shadow: 0 7px 25px #43e8d812;
+}
+.navbar-dropdown-btn:hover {
   background: var(--primary-light);
   color: var(--primary-dark);
 }
 
-/* Single-link nav highlighting */
-.navbar .container > a[aria-current="page"],
-.navbar .container > a.active, 
-.nav-dropdown button.active {
+/* Single-link nav highlighting (class-based) */
+.navbar-navlink.active,
+.navbar-navlink[aria-current="page"],
+.navbar-dropdown-btn.active,
+.navbar-dropdown-btn[aria-current="page"] {
   background: var(--secondary);
-  color: #222;
-  box-shadow: 0 4px 14px #43e8d812, 0 0.5px 2px #4a6b99;
+  color: var(--primary-dark);
+  box-shadow: 0 9px 19px #43e8d812, 0 0.7px 2.2px #2f155911;
 }
 
 /* Drop-down menu styling */
@@ -206,7 +270,8 @@ a {
   to   { opacity: 1; transform: translateY(0) scale(1);}
 }
 
-.nav-dropdown > div[role="listbox"] a {
+.navbar-dropdown-link,
+.nav-dropdown > div[role="listbox"] a.navbar-dropdown-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -221,9 +286,15 @@ a {
   border-radius: 0 var(--radius) var(--radius) 0;
   transition: all var(--tr-fast);
   cursor: pointer;
+  outline: none;
 }
-.nav-dropdown > div[role="listbox"] a:hover, 
-.nav-dropdown > div[role="listbox"] a:focus {
+.navbar-dropdown-link .navbar-navlink-icon {
+  font-size: 1.08rem;
+  color: var(--primary-dark);
+}
+.navbar-dropdown-link:focus-visible,
+.navbar-dropdown-link:focus,
+.navbar-dropdown-link:hover {
   background: var(--primary-light);
   color: var(--primary);
   border-left: 4px solid var(--accent);
@@ -231,12 +302,14 @@ a {
   text-decoration: none;
   outline: none;
 }
-.nav-dropdown > div[role="listbox"] a[aria-current="page"] {
+.navbar-dropdown-link.active,
+.navbar-dropdown-link[aria-current="page"] {
   background: #efeff9;
   color: var(--primary);
   border-left: 4px solid var(--accent);
   font-weight: 700;
 }
+
 
 @media (max-width: 800px) {
   .navbar .container {

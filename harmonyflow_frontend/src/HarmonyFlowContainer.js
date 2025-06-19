@@ -232,28 +232,11 @@ function NavBar() {
                 <Link
                   key={cat.label}
                   to={item.path}
-                  style={{
-                    textDecoration: "none",
-                    color: isItemActive(item) ? "#fff" : "#e6e9ee",
-                    background: isItemActive(item) ? "var(--secondary)" : "transparent",
-                    padding: "8px 18px",
-                    margin: "0 0 0 2px",
-                    borderRadius: "7px",
-                    fontWeight: 600,
-                    fontSize: 17,
-                    transition: "background .19s,color .14s",
-                    outline: "none",
-                    border: "none",
-                    boxShadow: isItemActive(item)
-                      ? "0 2px 9px #50e3c216"
-                      : undefined,
-                    letterSpacing: ".01em",
-                    display: "flex",
-                    alignItems: "center",
-                    minWidth: 110,
-                  }}
+                  className={`navbar-navlink${isItemActive(item) ? " active" : ""}`}
+                  aria-current={isItemActive(item) ? "page" : undefined}
                 >
-                  {cat.icon} <span style={{ marginLeft: 8 }}>{item.label.replace("🏠 ", "")}</span>
+                  <span className="navbar-navlink-icon">{cat.icon}</span>
+                  <span style={{ marginLeft: 8 }}>{item.label.replace("🏠 ", "")}</span>
                 </Link>
               );
             }
@@ -300,40 +283,25 @@ function NavBar() {
                 }}
               >
                 <button
-                  style={{
-                    background: "transparent",
-                    color:
-                      cat.items.some(isItemActive) ? "#fff" : "#e6e9ee",
-                    borderRadius: "7px",
-                    border: "none",
-                    fontWeight: 600,
-                    fontSize: 16,
-                    padding: "8px 18px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 7,
-                    cursor: "pointer",
-                    minWidth: 120,
-                    transition: "background .12s,color .16s",
-                    boxShadow:
-                      cat.items.some(isItemActive)
-                        ? "0 2px 9px #50e3c216"
-                        : undefined,
-                    outline: "none",
-                    position: "relative"
-                  }}
-                  onClick={() => setOpenCat(openCat === i ? null : i)}
+                  className={`navbar-dropdown-btn${cat.items.some(isItemActive) ? " active" : ""}`}
                   aria-haspopup="listbox"
                   aria-expanded={openCat === i}
+                  onClick={() => setOpenCat(openCat === i ? null : i)}
+                  type="button"
                 >
-                  <span>{cat.icon}</span>
+                  <span className="navbar-navlink-icon">{cat.icon}</span>
                   <span>{cat.label}</span>
-                  <span style={{
-                    marginLeft: 6,
-                    display: "inline-block",
-                    transition: "transform 0.13s",
-                    transform: openCat === i ? "rotate(180deg)" : "rotate(0deg)"
-                  }}>▼</span>
+                  <span
+                    className="navbar-dropdown-arrow"
+                    style={{
+                      marginLeft: 6,
+                      display: "inline-block",
+                      transition: "transform 0.13s",
+                      transform: openCat === i ? "rotate(180deg)" : "rotate(0deg)",
+                    }}
+                  >
+                    ▼
+                  </span>
                 </button>
                 {/* Drop-down */}
                 <div
@@ -357,32 +325,14 @@ function NavBar() {
                     <Link
                       key={item.path}
                       to={item.path}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 10,
-                        width: "100%",
-                        padding: "11px 21px 10px 24px",
-                        textDecoration: "none",
-                        color: isItemActive(item)
-                          ? "var(--primary)"
-                          : "#344557",
-                        background: isItemActive(item)
-                          ? "#eaf6fc"
-                          : "transparent",
-                        fontWeight: isItemActive(item) ? 700 : 500,
-                        fontSize: 15.5,
-                        lineHeight: 1.16,
-                        transition: "background .12s,color .13s",
-                        border: "none",
-                        borderLeft: isItemActive(item)
-                          ? "4px solid var(--accent)"
-                          : "4px solid transparent",
-                      }}
+                      className={`navbar-dropdown-link${isItemActive(item) ? " active" : ""}`}
+                      aria-current={isItemActive(item) ? "page" : undefined}
                       tabIndex={0}
                       onClick={() => setOpenCat(null)}
                     >
-                      <span style={{ opacity: .82, minWidth: 27, fontSize: 17 }}>{item.label.match(/^.\s/) ? item.label.slice(0,2) : ""}</span>
+                      <span className="navbar-navlink-icon" style={{ opacity: 0.82, minWidth: 27, fontSize: 17 }}>
+                        {item.label.match(/^.\s/) ? item.label.slice(0,2) : ""}
+                      </span>
                       <span>{item.label.replace(/^.\s/, "")}</span>
                     </Link>
                   ))}

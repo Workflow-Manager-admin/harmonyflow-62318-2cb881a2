@@ -2,10 +2,11 @@ import React, { useRef, useState, useLayoutEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 /**
- * ResponsiveNav (Modern horizontal scroll + accessible More dropdown for overflow)
+ * ResponsiveNav (Modern horizontal scroll + accessible "More" dropdown for overflow)
  *
- * Renders all navigation links as a scrollable horizontal bar; automatically moves links that don't fit into
- * an accessible "More" dropdown. Implements full keyboard and touch accessibility with a premium theme look.
+ * Renders all navigation links as a horizontal scrollable bar on desktop, and collapses into a premium "drawer" menu on mobile.
+ * Handles overflow dynamically with "More" drop-down. All links are always accessible via keyboard/mouse/touch.
+ * Theme and accessibility adherent.
  */
 
 // Navigation links (adjust/add here for more links)
@@ -84,7 +85,9 @@ const NAV_LINKS = [
   }
 ];
 
-// PUBLIC_INTERFACE
+/**
+ * ResponsiveNav (Modern horizontal scroll + accessible "More" dropdown for overflow + modal drawer for mobile)
+ */
 function ResponsiveNav() {
   const containerRef = useRef();
   const moreBtnRef = useRef();
@@ -92,11 +95,22 @@ function ResponsiveNav() {
   const [overflowed, setOverflowed] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const [visible, setVisible] = useState(NAV_LINKS.map((_, i) => i));
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
 
-  // Overflow calculation: decide which links fit
+  // Responsive: detect mobile size
+  useLayoutEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 700);
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Overflow calculation: decide which links fit (desktop only)
   const checkOverflow = useCallback(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || isMobile) return;
     const children = Array.from(containerRef.current.children).filter(n => n.dataset && n.dataset.index);
     const containerWidth = containerRef.current.offsetWidth;
     let used = 0, fit = [], extra = [];
@@ -117,26 +131,28 @@ function ResponsiveNav() {
     }
     setVisible(fit);
     setOverflowed(extra);
-  }, []);
+  }, [isMobile]);
 
-  // Setup re-checks on resize/orientation/font changes
+  // Setup re-checks on resize/font
   useLayoutEffect(() => {
-    checkOverflow();
-    window.addEventListener("resize", checkOverflow);
-    window.addEventListener("orientationchange", checkOverflow);
-    const interval = setInterval(checkOverflow, 1000);
-    setTimeout(() => clearInterval(interval), 2000);
-    return () => {
-      window.removeEventListener("resize", checkOverflow);
-      window.removeEventListener("orientationchange", checkOverflow);
-      clearInterval(interval);
-    };
-  }, [checkOverflow]);
+    if (!isMobile) {
+      checkOverflow();
+      window.addEventListener("resize", checkOverflow);
+      window.addEventListener("orientationchange", checkOverflow);
+      const interval = setInterval(checkOverflow, 1000);
+      setTimeout(() => clearInterval(interval), 2000);
+      return () => {
+        window.removeEventListener("resize", checkOverflow);
+        window.removeEventListener("orientationchange", checkOverflow);
+        clearInterval(interval);
+      };
+    }
+  }, [isMobile, checkOverflow]);
 
-  // Hide More menu after navigation
-  useLayoutEffect(() => { setShowMore(false); }, [location.pathname]);
+  // Hide menus after navigation
+  useLayoutEffect(() => { setShowMore(false); setMobileMenuOpen(false); }, [location.pathname]);
 
-  // More dropdown accessibility
+  // Accessibility: More dropdown (desktop)
   function handleMoreKey(e) {
     if (e.key === "Enter" || e.key === " ") setShowMore(v => !v);
     else if (e.key === "ArrowDown" && showMore && moreMenuRef.current) {
@@ -146,7 +162,6 @@ function ResponsiveNav() {
       setShowMore(false);
       if (moreBtnRef.current) moreBtnRef.current.focus();
     } else if (e.key === "Tab" && showMore && moreMenuRef.current) {
-      // Trap tab inside dropdown
       const links = moreMenuRef.current.querySelectorAll("a,button");
       if (!links.length) return;
       if (!e.shiftKey && document.activeElement === links[links.length-1]) { e.preventDefault(); links[0].focus(); }
@@ -154,7 +169,7 @@ function ResponsiveNav() {
     }
   }
 
-  // Handle navigation (keyboard) between visible links
+  // Desktop nav: keyboard nav between links
   function handleNavKey(e, idx) {
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
     e.preventDefault();
@@ -174,7 +189,7 @@ function ResponsiveNav() {
   function handleBlur() {
     setTimeout(() => {
       if (
-        !containerRef.current.contains(document.activeElement) &&
+        (containerRef.current && !containerRef.current.contains(document.activeElement)) &&
         (!moreMenuRef.current || !moreMenuRef.current.contains(document.activeElement))
       ) {
         setShowMore(false);
@@ -182,13 +197,126 @@ function ResponsiveNav() {
     }, 120);
   }
 
-  // Allow scrolling x-axis with mouse wheel
+  // Horizontal scroll wheel
   function handleScrollWheel(e) {
-    if (e.deltaY && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+    if (e.deltaY && Math.abs(e.deltaY) > Math.abs(e.deltaX) && containerRef.current) {
       containerRef.current.scrollLeft += e.deltaY;
     }
   }
 
+  // --- Main Nav Rendering (desktop horizontal or mobile drawer) ---
+  if (isMobile) {
+    // Mobile drawer menu
+    return (
+      <div style={{ display: "flex", alignItems: "center", marginLeft: 12 }}>
+        <button
+          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          className="btn"
+          style={{
+            background: "linear-gradient(96deg,#4A90E2 78%,#50E3C2 100%)",
+            color: "#fff",
+            borderRadius: 12,
+            fontWeight: 800,
+            fontSize: "1.14em",
+            minWidth: 56,
+            padding: "10px 19px",
+            cursor: "pointer",
+            border: "none",
+            boxShadow: "0 2px 14px #437aff1c",
+          }}
+          onClick={() => setMobileMenuOpen(v=>!v)}
+          tabIndex={0}
+          type="button"
+        >
+          <span style={{marginRight: 7}}>{mobileMenuOpen ? "✕" : "☰"}</span>
+        </button>
+        {mobileMenuOpen && (
+          <div
+            className="nav-mobile-drawer"
+            style={{
+              position: "fixed",
+              top: 0, left: 0,
+              width: "87vw", maxWidth: 370,
+              height: "100vh",
+              background: "#fff",
+              boxShadow: "2px 0 40px #2641832e",
+              zIndex: 1555,
+              borderTopRightRadius: 25,
+              borderBottomRightRadius: 27,
+              overflowY: "auto",
+              padding: "26px 12px 28px 21px",
+              animation: "navMobileIn .22s cubic-bezier(.48,.15,.19,1) forwards"
+            }}
+            tabIndex={-1}
+          >
+            <div style={{
+              fontSize: "1.34em",
+              fontWeight: 900,
+              color: "var(--primary-light)",
+              letterSpacing: ".03em",
+              margin: "0 0 20px 6px",
+              fontFamily: "var(--display-font)",
+            }}>
+              Navigation
+            </div>
+            <nav>
+              {NAV_LINKS.map((nav, idx) => (
+                <Link
+                  key={nav.to}
+                  to={nav.to}
+                  style={{
+                    display: "block",
+                    background: location.pathname === nav.to ? "linear-gradient(96deg,#437AFF 80%,#50E3C2 100%)" : "none",
+                    color: location.pathname === nav.to ? "#fff" : "#4A90E2",
+                    fontWeight: location.pathname === nav.to ? 700 : 600,
+                    borderRadius: 13,
+                    marginBottom: 7,
+                    padding: "13px 18px",
+                    boxShadow: location.pathname === nav.to
+                      ? "0 2px 15px #4775f522"
+                      : undefined,
+                    border: "none"
+                  }}
+                  aria-current={location.pathname === nav.to ? "page" : undefined}
+                  aria-label={nav.label}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {nav.label}
+                </Link>
+              ))}
+            </nav>
+            <div style={{ marginTop: 26, color: "#B7B7D7", fontSize: ".95em", paddingLeft: 3 }}>
+              <span style={{ color: "#F5A623" }}>●</span>
+              &nbsp; HarmonyFlow Navigation
+            </div>
+          </div>
+        )}
+        {/* Simple fullscreen overlay for background blur/focus */}
+        {mobileMenuOpen && (
+          <div
+            tabIndex={-1}
+            style={{
+              position: "fixed",
+              top: 0, left: 0, right: 0, bottom: 0,
+              width: "100vw", height: "100vh",
+              background: "rgba(60, 70, 100, 0.19)",
+              zIndex: 1500,
+              // no pointer events inside overlay; only for dimming & closing
+            }}
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close navigation menu"
+          />
+        )}
+        <style>{`
+          @keyframes navMobileIn {
+            from { transform: translateX(-66px) scale(.94); opacity:0.16;}
+            to { transform: translateX(0) scale(1); opacity:1;}
+          }
+        `}</style>
+      </div>
+    );
+  }
+  // ---- Desktop horizontal nav ----
   return (
     <div
       className="nav-scroll-container"

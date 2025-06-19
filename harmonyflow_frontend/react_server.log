@@ -23,18 +23,16 @@ cacheable modules 1.64 MiB
       ./.ve/EditorOverlay.css 2.25 KiB [built] [code generated]
       ./node_modules/css-loader/dist/cjs.js!./.ve/EditorOverlay.css 697 bytes [built] [code generated]
     ./.ve/EditorOverlay.jsx 1.58 KiB [built] [code generated]
-webpack 5.99.9 compiled successfully in 1445 ms
+webpack 5.99.9 compiled successfully in 1502 ms
 assets by status 1.98 KiB [cached] 1 asset
-assets by path *.js 1.83 MiB
-  asset bundle.js 1.83 MiB [emitted] (name: main)
-  asset main.24f8f58a20640e75a48c.hot-update.js 854 bytes [emitted] [immutable] [hmr] (name: main)
+assets by path *.js 1.86 MiB
+  asset bundle.js 1.84 MiB [emitted] (name: main)
+  asset main.24f8f58a20640e75a48c.hot-update.js 22.2 KiB [emitted] [immutable] [hmr] (name: main)
 asset main.24f8f58a20640e75a48c.hot-update.json 28 bytes [emitted] [immutable] [hmr]
-Entrypoint main 1.83 MiB = bundle.js 1.83 MiB main.24f8f58a20640e75a48c.hot-update.js 854 bytes
+Entrypoint main 1.86 MiB = bundle.js 1.84 MiB main.24f8f58a20640e75a48c.hot-update.js 22.2 KiB
 cached modules 1.63 MiB [cached] 52 modules
 runtime modules 28.7 KiB 15 modules
-./src/FlowStateInductionSystem.js 13.5 KiB [built]
-webpack 5.99.9 compiled successfully in 120 ms
-assets by status 1.83 MiB [cached] 2 assets
-cached modules 1.63 MiB (javascript) 28.7 KiB (runtime) [cached] 67 modules
-./src/App.js 6.31 KiB [built]
-webpack 5.99.9 compiled successfully in 61 ms
+javascript modules 14.3 KiB
+  ./src/App.js 7.07 KiB [built] [code generated]
+  ./src/SparksMicroCoaching.js 7.26 KiB [built] [code generated]
+webpack 5.99.9 compiled successfully in 138 ms

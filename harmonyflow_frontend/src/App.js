@@ -93,6 +93,22 @@ function App() {
               Life Event Chain Tracker
             </Link>
             <Link
+              to="/sparks-micro-coaching"
+              style={{
+                color: "#fff",
+                background: "#ffbb37",
+                padding: "7px 14px",
+                borderRadius: "10px",
+                textDecoration: "none",
+                fontWeight: 600,
+                border: "2px solid #F5A623",
+                margin: "0 0 0 0",
+                boxShadow: "0 1px 7px #fae0b5cc"
+              }}
+            >
+              Sparks Micro-Coaching
+            </Link>
+            <Link
               to="/flow-state-induction"
               style={{
                 color: "#fff",
@@ -125,6 +141,10 @@ function App() {
             <Route
               path="/life-event-chain"
               element={React.createElement(require("./LifeEventChainTracker").default)}
+            />
+            <Route
+              path="/sparks-micro-coaching"
+              element={React.createElement(require("./SparksMicroCoaching").default)}
             />
             <Route
               path="/flow-state-induction"

@@ -278,8 +278,6 @@ function NavBar() {
                 }}
                 key={cat.label}
                 tabIndex={0}
-                onMouseEnter={() => setOpenCat(i)}
-                onMouseLeave={() => setOpenCat(openCat === i ? null : openCat)}
                 onFocus={() => setOpenCat(i)}
                 onBlur={e => {
                   // Only close dropdown if focus moves outside both button and dropdown menu

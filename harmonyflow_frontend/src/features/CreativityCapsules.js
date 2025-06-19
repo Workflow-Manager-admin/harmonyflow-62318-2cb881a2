@@ -32,17 +32,18 @@ export default function CreativityCapsules() {
   }
 
   return (
-    <div style={{
-      background: "#fff",
-      borderRadius: 12,
-      boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-      padding: 36,
-      marginTop: 33,
-      maxWidth: 420,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }}>
-      <h2 style={{ color: "#4A90E2", fontWeight: 600, margin: "0 0 8px" }}>Creativity Capsules</h2>
+    <section
+      className="feature-card"
+      style={{
+        marginTop: 33,
+        maxWidth: 420,
+        marginLeft: "auto",
+        marginRight: "auto"
+      }}
+      aria-label="Creativity Capsules"
+      tabIndex={0}
+    >
+      <h2 style={{ color: "var(--primary)", fontWeight: 700, margin: "0 0 8px" }}>Creativity Capsules</h2>
       <div style={{ fontSize: 15, marginBottom: 8 }}>
         Unleash your creativity! Open a capsule for an artsy quest.
       </div>
@@ -58,16 +59,23 @@ export default function CreativityCapsules() {
                   placeholder="Your poetic, visual or musical response..."
                   style={{
                     width: "100%",
-                    border: "1px solid #4A90E2",
-                    borderRadius: 6,
-                    padding: 7,
+                    border: "1.5px solid var(--primary)",
+                    borderRadius: "var(--radius-sm)",
+                    padding: 10,
                     fontSize: 15,
-                    marginBottom: 9
+                    background: "#f7fafd",
+                    color: "var(--primary-dark)",
+                    marginBottom: 11,
+                    transition: "border var(--tr-fast), box-shadow var(--tr-fast)"
                   }}
                   required
                 />
                 <button type="submit" className="btn" style={{
-                  background: "#4A90E2", color: "#fff", borderRadius: 5, fontSize: 15
+                  background: "var(--primary)",
+                  color: "#fff",
+                  borderRadius: "var(--radius-sm)",
+                  fontWeight: 700,
+                  fontSize: 15
                 }}>Save Response</button>
               </form>
             </div>
@@ -79,15 +87,19 @@ export default function CreativityCapsules() {
       <div style={{ marginTop: 24 }}>
         <h4 style={{ color: "#768394", fontSize: 16 }}>My Past Capsules</h4>
         {responses.length === 0 && <div style={{ color: "#aaa" }}>No responses saved yet.</div>}
-        <ul>
+        <ul style={{ marginTop: 6, paddingLeft: 15 }}>
           {responses.map((r, i) => (
-            <li key={i} style={{ marginBottom: 9 }}>
-              <b style={{ color: "#4A90E2" }}>{r.prompt}</b><br />
-              <span style={{ color: "#222" }}>{r.response}</span>
+            <li key={i} style={{
+              marginBottom: 10,
+              color: "var(--text-main)",
+              padding: "8px 0"
+            }}>
+              <b style={{ color: "var(--primary)", fontWeight: 600 }}>{r.prompt}</b><br />
+              <span style={{ color: "var(--text-subtle)" }}>{r.response}</span>
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </section>
   );
 }

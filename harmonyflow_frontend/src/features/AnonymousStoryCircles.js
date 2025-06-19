@@ -30,17 +30,18 @@ export default function AnonymousStoryCircles() {
   }
 
   return (
-    <div style={{
-      background: "#fff",
-      borderRadius: 12,
-      boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-      padding: 36,
-      marginTop: 33,
-      maxWidth: 430,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }}>
-      <h2 style={{ color: "#50E3C2", fontWeight: 600, margin: "0 0 12px" }}>Anonymous Story Circles</h2>
+    <section
+      className="feature-card"
+      style={{
+        marginTop: 33,
+        maxWidth: 430,
+        marginLeft: "auto",
+        marginRight: "auto"
+      }}
+      aria-label="Anonymous Story Circles"
+      tabIndex={0}
+    >
+      <h2 style={{ color: "var(--secondary)", fontWeight: 700, margin: "0 0 10px" }}>Anonymous Story Circles</h2>
       <div style={{ fontSize: 15, marginBottom: 10 }}>
         Share anonymously, read others' journeys, and feel less alone.
       </div>
@@ -53,32 +54,63 @@ export default function AnonymousStoryCircles() {
           required
           style={{
             width: "100%",
-            border: "1px solid #50E3C2",
-            borderRadius: 6,
-            padding: 8,
-            minHeight: 40
+            border: "1.5px solid var(--secondary)",
+            borderRadius: "var(--radius-sm)",
+            padding: 11,
+            minHeight: 40,
+            fontSize: 15,
+            color: "var(--primary-dark)",
+            background: "#f5f7fa",
+            boxShadow: "none",
+            transition: "border var(--tr-fast), box-shadow var(--tr-fast)",
+            outline: "none"
           }}
         />
-        <div style={{ display: "flex", marginTop: 5, gap: 6 }}>
+        <div style={{ display: "flex", marginTop: 7, gap: 8, alignItems: "center" }}>
           <button type="submit" className="btn" style={{
-            background: "#50E3C2", color: "#fff", borderRadius: 5,
-            padding: "6px 16px"
-          }} disabled={submitting || !story.trim()}>
+            background: "var(--secondary)",
+            color: "#fff",
+            borderRadius: "var(--radius-sm)",
+            padding: "9px 19px",
+            fontWeight: 700,
+            fontSize: 15,
+            letterSpacing: ".01em",
+            boxShadow: "var(--shadow-xs)",
+            border: "none",
+            transition: "box-shadow var(--tr-fast), background var(--tr-fancy), color var(--tr-fast), transform var(--tr-fancy)"
+          }}
+          disabled={submitting || !story.trim()}
+          >
             {submitting ? "Posting..." : "Share"}
           </button>
-          <span style={{ color: "#768394", marginLeft: 7, fontSize: 13 }}>
+          <span style={{ color: "var(--text-muted)", marginLeft: 7, fontSize: 13 }}>
             Your story stays anonymous.
           </span>
         </div>
       </form>
-      <ul style={{ listStyle: "circle", paddingLeft: 20, maxHeight: 230, overflowY: "auto" }}>
+      <ul style={{
+        listStyle: "circle",
+        paddingLeft: 19,
+        maxHeight: 230,
+        overflowY: "auto",
+        marginTop: 7
+      }}>
         {stories.map((s, i) => (
-          <li key={i} style={{ marginBottom: 7 }}>
-            <span style={{ color: "#222" }}>{s.text}</span>
-            <span style={{ color: "#768394", marginLeft: 7, fontSize: 13 }}>({s.ts})</span>
+          <li key={i} style={{
+            marginBottom: 7,
+            background: "rgba(67,232,216,0.055)",
+            borderRadius: "var(--radius-xs)",
+            padding: "7px 12px",
+            fontSize: 15,
+            fontWeight: 500,
+            color: "var(--text-main)",
+            boxShadow: "0 1px 6px #50e3c20b"
+          }}>
+            <span>{s.text}</span>
+            <span style={{ color: "var(--text-subtle)", marginLeft: 7, fontSize: 13 }}>({s.ts})</span>
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 }

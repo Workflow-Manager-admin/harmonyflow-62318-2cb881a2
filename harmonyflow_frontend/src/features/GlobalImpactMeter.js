@@ -29,17 +29,18 @@ export default function GlobalImpactMeter() {
   }, []);
 
   return (
-    <div style={{
-      background: "#fff",
-      borderRadius: 12,
-      boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-      padding: 38,
-      marginTop: 32,
-      maxWidth: 430,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }}>
-      <h2 style={{ color: "#4A90E2", fontWeight: 600, margin: "0 0 10px" }}>Global Impact Meter</h2>
+    <section
+      className="feature-card"
+      style={{
+        marginTop: 32,
+        maxWidth: 430,
+        marginLeft: "auto",
+        marginRight: "auto"
+      }}
+      aria-label="Global Impact Meter"
+      tabIndex={0}
+    >
+      <h2 style={{ color: "var(--primary)", fontWeight: 700, margin: "0 0 10px" }}>Global Impact Meter</h2>
       <div style={{ marginBottom: 6 }}>
         <b>🌎 Collective progress</b>
       </div>
@@ -49,16 +50,23 @@ export default function GlobalImpactMeter() {
         <div><b>{stats.ecoActions}</b> Eco Actions</div>
         <div><b>{stats.businessPartners}</b> Biz Partners</div>
       </div>
-      <div style={{ width: "100%", background: "#EEF2F7", borderRadius: 8, height: 14, marginBottom: 7 }}>
+      <div style={{
+        width: "100%",
+        background: "var(--border-light)",
+        borderRadius: "var(--radius)",
+        height: 13,
+        marginBottom: 7,
+        overflow: "hidden"
+      }}>
         <div style={{
           width: stats.progress + "%",
-          background: "#50E3C2",
+          background: "linear-gradient(90deg, var(--secondary) 50%, var(--primary) 100%)",
           height: "100%",
-          borderRadius: 8,
-          transition: "width 500ms"
+          borderRadius: "var(--radius)",
+          transition: "width 500ms var(--tr-fast)"
         }} />
       </div>
-      <span style={{ color: "#768394", fontSize: 13 }}>{stats.progress}% to next global milestone!</span>
-    </div>
+      <span style={{ color: "var(--text-muted)", fontSize: 13 }}>{stats.progress}% to next global milestone!</span>
+    </section>
   );
 }

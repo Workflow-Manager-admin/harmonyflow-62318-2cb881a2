@@ -2,14 +2,13 @@ import React, { useRef, useState, useLayoutEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 /**
- * ResponsiveNav
+ * ResponsiveNav (Modern horizontal scroll + accessible More dropdown for overflow)
  *
- * Displays navigation links in a horizontally scrollable container.
- * If there are too many to fit, overflows are collected into a modern, accessible "More" dropdown.
- * Handles horizontal scroll and dropdown overflow responsively with premium style and full keyboard accessibility.
+ * Renders all navigation links as a scrollable horizontal bar; automatically moves links that don't fit into
+ * an accessible "More" dropdown. Implements full keyboard and touch accessibility with a premium theme look.
  */
 
-// Navigation configuration: label, path, link styles
+// Navigation links (adjust/add here for more links)
 const NAV_LINKS = [
   {
     label: "Dashboard",
@@ -93,35 +92,22 @@ function ResponsiveNav() {
   const [overflowed, setOverflowed] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const [visible, setVisible] = useState(NAV_LINKS.map((_, i) => i));
-  const [lastResize, setLastResize] = useState(Date.now());
   const location = useLocation();
 
-  // Overflow logic, recomputed on size/zoom changes
+  // Overflow calculation: decide which links fit
   const checkOverflow = useCallback(() => {
     if (!containerRef.current) return;
-
-    // Get link nodes & container width
     const children = Array.from(containerRef.current.children).filter(n => n.dataset && n.dataset.index);
     const containerWidth = containerRef.current.offsetWidth;
     let used = 0, fit = [], extra = [];
-
-    // Reset display for measurement: show all links
     for (let i = 0; i < NAV_LINKS.length; i++) {
       if (children[i]) children[i].style.display = "";
     }
-
-    // Always reserve space for 'More' button if some links could overflow
-    const moreBtnWidth =
-      containerRef.current.querySelector(".nav-more-btn")?.offsetWidth
-      || 82; // assume generous width
-
+    const moreBtnWidth = containerRef.current.querySelector(".nav-more-btn")?.offsetWidth || 82;
     for (let i = 0; i < NAV_LINKS.length; i++) {
       const node = children[i];
       if (!node) continue;
-      let nodeWidth = node.offsetWidth;
-
-      // Account for margin
-      let margin = 8;
+      let nodeWidth = node.offsetWidth, margin = 8;
       if (used + nodeWidth + (extra.length === 0 ? 0 : moreBtnWidth) + margin > containerWidth) {
         extra.push(i);
       } else {
@@ -133,19 +119,13 @@ function ResponsiveNav() {
     setOverflowed(extra);
   }, []);
 
-  // Run overflow computation on layout and window/zoom/orientation changes
+  // Setup re-checks on resize/orientation/font changes
   useLayoutEffect(() => {
     checkOverflow();
     window.addEventListener("resize", checkOverflow);
     window.addEventListener("orientationchange", checkOverflow);
-
-    // To robustly detect zoom/font size changes, also re-run periodically for a bit after mount
-    const interval = setInterval(() => {
-      setLastResize(Date.now());
-      checkOverflow();
-    }, 1100);
-    setTimeout(() => clearInterval(interval), 3500);
-
+    const interval = setInterval(checkOverflow, 1000);
+    setTimeout(() => clearInterval(interval), 2000);
     return () => {
       window.removeEventListener("resize", checkOverflow);
       window.removeEventListener("orientationchange", checkOverflow);
@@ -153,27 +133,45 @@ function ResponsiveNav() {
     };
   }, [checkOverflow]);
 
-  // Hide More dropdown when navigating
-  useLayoutEffect(() => {
-    setShowMore(false);
-  }, [location.pathname]);
+  // Hide More menu after navigation
+  useLayoutEffect(() => { setShowMore(false); }, [location.pathname]);
 
-  // Keyboard accessibility for the More button/menu
+  // More dropdown accessibility
   function handleMoreKey(e) {
-    if (e.key === "Enter" || e.key === " ") {
-      setShowMore(v => !v);
-    } else if (e.key === "ArrowDown" && showMore && moreMenuRef.current) {
-      // Focus first menu item
+    if (e.key === "Enter" || e.key === " ") setShowMore(v => !v);
+    else if (e.key === "ArrowDown" && showMore && moreMenuRef.current) {
       const links = moreMenuRef.current.querySelectorAll("a,button");
       if (links[0]) links[0].focus();
     } else if (e.key === "Escape") {
       setShowMore(false);
       if (moreBtnRef.current) moreBtnRef.current.focus();
+    } else if (e.key === "Tab" && showMore && moreMenuRef.current) {
+      // Trap tab inside dropdown
+      const links = moreMenuRef.current.querySelectorAll("a,button");
+      if (!links.length) return;
+      if (!e.shiftKey && document.activeElement === links[links.length-1]) { e.preventDefault(); links[0].focus(); }
+      if (e.shiftKey && document.activeElement === links[0]) { e.preventDefault(); links[links.length-1].focus(); }
     }
   }
 
-  function handleBlur(e) {
-    // Only close if focus moves outside the dropdown and button
+  // Handle navigation (keyboard) between visible links
+  function handleNavKey(e, idx) {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    const links = containerRef.current.querySelectorAll('a[data-index]:not([style*="display: none"])');
+    let found = -1;
+    for (let i = 0; i < links.length; i++) {
+      if (parseInt(links[i].dataset.index) === idx) { found = i; break; }
+    }
+    if (found < 0) return;
+    let next;
+    if (e.key === "ArrowLeft") next = (found - 1 + links.length) % links.length;
+    if (e.key === "ArrowRight") next = (found + 1) % links.length;
+    if (links[next]) links[next].focus();
+  }
+
+  // Touch/blur: close dropdown after focus leaves nav
+  function handleBlur() {
     setTimeout(() => {
       if (
         !containerRef.current.contains(document.activeElement) &&
@@ -181,11 +179,22 @@ function ResponsiveNav() {
       ) {
         setShowMore(false);
       }
-    }, 130);
+    }, 120);
+  }
+
+  // Allow scrolling x-axis with mouse wheel
+  function handleScrollWheel(e) {
+    if (e.deltaY && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      containerRef.current.scrollLeft += e.deltaY;
+    }
   }
 
   return (
-    <div className="nav-scroll-container" style={{ position: "relative" }}>
+    <div
+      className="nav-scroll-container"
+      style={{ position: "relative", WebkitOverflowScrolling: "touch" }}
+      onWheel={handleScrollWheel}
+    >
       <div className="nav-inner" ref={containerRef}>
         {NAV_LINKS.map((nav, idx) => (
           <Link
@@ -205,6 +214,7 @@ function ResponsiveNav() {
             aria-current={location.pathname === nav.to ? "page" : undefined}
             aria-label={nav.label}
             data-index={idx}
+            onKeyDown={e => handleNavKey(e, idx)}
           >
             {nav.label}
           </Link>
@@ -238,6 +248,8 @@ function ResponsiveNav() {
               outline: showMore ? "2.5px solid var(--accent)" : undefined,
               transition: "box-shadow 0.16s, outline 0.16s"
             }}
+            aria-label="Show more navigation items"
+            role="button"
           >
             <span style={{ marginRight: 6 }}>More</span>
             <span aria-hidden="true">▼</span>
@@ -292,6 +304,9 @@ function ResponsiveNav() {
                       aria-current={location.pathname === nav.to ? "page" : undefined}
                       aria-label={nav.label}
                       onClick={() => setShowMore(false)}
+                      onKeyDown={e=>{
+                        if (e.key==="Escape" || e.key==="Tab") setShowMore(false);
+                      }}
                     >
                       {nav.label}
                     </Link>

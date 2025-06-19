@@ -35,16 +35,57 @@ export default function DashboardWidgetTile({
   };
   const accentColor = ACCENTS[accent] || "var(--primary)";
 
+  // Accessibility: focus indicator + keyboard navigation
+  const sectionRef = React.useRef(null);
+
+  // Handle keyboard interaction: move focus to next/previous tile (left/right arrow), simulate "button" on Enter for header
+  function onKeyDown(e) {
+    // Trap arrow navigation between dashboard tiles
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
+      e.preventDefault();
+      let dir = ["ArrowLeft", "ArrowUp"].includes(e.key) ? -1 : 1;
+      let cards = Array.from(document.querySelectorAll(".dashboard-widget"));
+      let idx = cards.findIndex((el) => el === sectionRef.current);
+      if (idx !== -1) {
+        let next = cards[(idx + dir + cards.length) % cards.length];
+        if (next) next.focus();
+      }
+    }
+    // Focus header/title with Home/End
+    if (e.key === "Home") {
+      e.preventDefault();
+      let cards = Array.from(document.querySelectorAll(".dashboard-widget"));
+      if (cards.length > 0 && cards[0]) cards[0].focus();
+    }
+    if (e.key === "End") {
+      e.preventDefault();
+      let cards = Array.from(document.querySelectorAll(".dashboard-widget"));
+      if (cards.length > 0 && cards[cards.length - 1])
+        cards[cards.length - 1].focus();
+    }
+  }
+
+  // Provide high-contrast border for focus (if not overridden by stylesheet)
+  const focusStyles = {
+    boxShadow:
+      "0 0 0 3px var(--secondary), 0 2.5px 18px #43e8d822 !important",
+    borderColor: "var(--accent) !important",
+  };
+
+  // Responsive + touch target size (minHeight, padding adapted with media queries)
   return (
     <section
+      ref={sectionRef}
       className="feature-card dashboard-widget"
       tabIndex={0}
       aria-label={ariaLabel || title}
+      aria-roledescription="Dashboard widget"
+      role="region"
       style={{
         background: "var(--card-bg)",
         borderRadius: "var(--radius-lg)",
         boxShadow: "var(--shadow-md)",
-        padding: "28px 26px 18px 26px",
+        padding: "min(6vw,32px) min(5vw,26px) min(3vw,18px) min(5vw,26px)",
         marginBottom: 18,
         position: "relative",
         minWidth: 0,
@@ -55,8 +96,23 @@ export default function DashboardWidgetTile({
         transition: "border-color var(--tr-fast), box-shadow var(--tr-fancy)",
         width: "100%",
         maxWidth: "100%",
+        boxSizing: "border-box",
+        touchAction: "manipulation",
+      }}
+      onKeyDown={onKeyDown}
+      onFocus={(e) => {
+        // High-contrast ring on keyboard focus
+        e.target.style.boxShadow =
+          focusStyles.boxShadow;
+        e.target.style.borderColor =
+          accentColor;
+      }}
+      onBlur={(e) => {
+        e.target.style.boxShadow = "";
+        e.target.style.borderColor = "";
       }}
       {...props}
+      data-dashboard-widget // For testability/access
     >
       <div
         aria-hidden="true"
@@ -72,13 +128,25 @@ export default function DashboardWidgetTile({
       >
         {icon}
       </div>
-      <header style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 2 }}>
+      <header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          marginBottom: 2,
+          minHeight: 38, // Ensures tap target is large
+        }}
+        role="heading"
+        aria-level={2}
+        tabIndex={-1}
+      >
         {icon && (
           <span
             style={{
               fontSize: 26,
               color: accentColor,
-              filter: "drop-shadow(0 2.5px 0 #fff5) drop-shadow(0 1.5px 0 #b7cdfa17)",
+              filter:
+                "drop-shadow(0 2.5px 0 #fff5) drop-shadow(0 1.5px 0 #b7cdfa17)",
               marginTop: -2,
               flexShrink: 0,
             }}
@@ -96,6 +164,8 @@ export default function DashboardWidgetTile({
             zIndex: 1,
             letterSpacing: "-0.01em",
             position: "relative",
+            // High-contrast fallback
+            textShadow: "0 1px 0 #fff5, 0 2.2px 5px #1a1d2e14",
           }}
         >
           {title}
@@ -105,15 +175,24 @@ export default function DashboardWidgetTile({
         <div
           className="card-desc"
           style={{
-            color: "var(--text-muted)",
+            color: "var(--text-main)", // Use high-contrast text for accessibility
             margin: "4px 0 9px 0",
-            fontSize: 14.7,
+            fontSize: 15.5,
+            fontWeight: 500,
+            lineHeight: 1.5,
           }}
         >
           {desc}
         </div>
       )}
-      <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {children}
+      </div>
     </section>
   );
 }

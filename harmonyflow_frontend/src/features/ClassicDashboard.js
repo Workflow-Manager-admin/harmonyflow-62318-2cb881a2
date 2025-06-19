@@ -23,6 +23,7 @@ import KPIMetrics from "./KPIMetrics";
  * ClassicDashboard -- Main premium dashboard with all primary HarmonyFlow modules as stylized widgets.
  */
 export default function ClassicDashboard() {
+  // Responsive two-column dashboard using CSS grid and ARIA/roles
   return (
     <div style={{ padding: 0, width: "100%" }}>
       <h1
@@ -35,31 +36,37 @@ export default function ClassicDashboard() {
           letterSpacing: "-0.01em",
         }}
         tabIndex={0}
+        role="heading"
+        aria-level={1}
+        aria-label="Main Dashboard"
       >
         My Life Dashboard
       </h1>
       <div
         className="feature-grid"
         style={{
-          display: "flex",
-          flexWrap: "wrap",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
           gap: "var(--gap-lg)",
           alignItems: "flex-start",
           justifyContent: "center",
           width: "100%",
+          maxWidth: "1100px",
         }}
+        role="main"
+        aria-label="Dashboard Main Area"
       >
         {/* Left/Primary Column */}
         <section
           style={{
-            flex: "1 1 350px",
-            minWidth: 320,
-            maxWidth: 520,
+            minWidth: 0,
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             gap: "var(--gap-md)",
           }}
           aria-label="Personal Dashboard Main"
+          role="region"
         >
           <GoalMappingDashboard />
           <AISchedulerOracle />
@@ -70,14 +77,14 @@ export default function ClassicDashboard() {
         {/* Right/Secondary Column */}
         <section
           style={{
-            flex: "1 1 310px",
-            minWidth: 310,
-            maxWidth: 520,
+            minWidth: 0,
+            width: "100%",
             display: "flex",
             flexDirection: "column",
             gap: "var(--gap-md)",
           }}
           aria-label="AI, Social, + Habit Challenge Widgets"
+          role="complementary"
         >
           <AILifeCoach />
           <SurpriseChallengeMode />
@@ -92,6 +99,26 @@ export default function ClassicDashboard() {
           <LocalBusinessPartnerships />
         </section>
       </div>
+      {/* Responsive grid override for mobile/tablet */}
+      <style>{`
+        @media (max-width: 980px) {
+          .feature-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .feature-grid {
+            gap: var(--gap-md) !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+          }
+          .feature-card,
+          .dashboard-widget {
+            padding-left: 7px !important;
+            padding-right: 7px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

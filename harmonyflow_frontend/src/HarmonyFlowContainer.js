@@ -236,7 +236,7 @@ function NavBar() {
                   aria-current={isItemActive(item) ? "page" : undefined}
                 >
                   <span className="navbar-navlink-icon">{cat.icon}</span>
-                  <span style={{ marginLeft: 8 }}>{item.label.replace("🏠 ", "")}</span>
+                  <span style={{ marginLeft: 8, color: "#000" }}>{item.label.replace("🏠 ", "")}</span>
                 </Link>
               );
             }
@@ -333,7 +333,7 @@ function NavBar() {
                       <span className="navbar-navlink-icon" style={{ opacity: 0.82, minWidth: 27, fontSize: 17 }}>
                         {item.label.match(/^.\s/) ? item.label.slice(0,2) : ""}
                       </span>
-                      <span>{item.label.replace(/^.\s/, "")}</span>
+                      <span style={{ color: "#000" }}>{item.label.replace(/^.\s/, "")}</span>
                     </Link>
                   ))}
                 </div>

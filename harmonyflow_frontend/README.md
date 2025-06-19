@@ -9,6 +9,12 @@ This project provides a minimal React template with a clean, modern UI and minim
 - **Fast**: Minimal dependencies for quick loading times
 - **Simple**: Easy to understand and modify
 
+### ⚠️ To enable navigation and feature pages, install `react-router-dom`:
+
+```sh
+npm install react-router-dom
+```
+
 ## Important Note: Babel Configuration
 
 This project’s `package.json` includes a `babel` section with a plugin:

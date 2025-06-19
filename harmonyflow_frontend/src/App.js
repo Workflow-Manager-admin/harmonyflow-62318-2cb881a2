@@ -153,6 +153,23 @@ function App() {
             >
               Task Prioritization
             </Link>
+            <Link
+              to="/whisper-journal"
+              style={{
+                color: "#fff",
+                background: "#4758ee",
+                padding: "8px 17px",
+                borderRadius: "11px",
+                textDecoration: "none",
+                fontWeight: 700,
+                border: "2px solid #4A90E2",
+                marginLeft: "8px",
+                letterSpacing: "0.01em",
+                boxShadow: "0 1px 7px #c7e3fe80"
+              }}
+            >
+              Whisper Journal
+            </Link>
           </div>
         </nav>
         <div style={{ paddingTop: 80, minHeight: '100vh', background: "var(--base-dark)" }}>
@@ -187,6 +204,11 @@ function App() {
             <Route
               path="/emotion-task-prioritization"
               element={React.createElement(require("./EmotionTaskPrioritization").default)}
+            />
+            {/* Whisper Journal integration */}
+            <Route
+              path="/whisper-journal"
+              element={React.createElement(require("./WhisperJournal").default)}
             />
           </Routes>
         </div>

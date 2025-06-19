@@ -92,6 +92,21 @@ function App() {
             >
               Life Event Chain Tracker
             </Link>
+            <Link
+              to="/flow-state-induction"
+              style={{
+                color: "#fff",
+                background: "#4A90E2",
+                padding: "8px 16px",
+                borderRadius: "9px",
+                textDecoration: "none",
+                fontWeight: 600,
+                border: "2px solid #50E3C2",
+                marginLeft: "8px"
+              }}
+            >
+              Flow State Induction
+            </Link>
           </div>
         </nav>
         <div style={{ paddingTop: 80, minHeight: '100vh', background: "var(--base-dark)" }}>
@@ -110,6 +125,10 @@ function App() {
             <Route
               path="/life-event-chain"
               element={React.createElement(require("./LifeEventChainTracker").default)}
+            />
+            <Route
+              path="/flow-state-induction"
+              element={React.createElement(require("./FlowStateInductionSystem").default)}
             />
           </Routes>
         </div>

@@ -302,11 +302,33 @@ a:hover, a:focus {
 
 /* For any elevated cards/sections */
 .elevated {
-  background: var(--surface-elevated);
+  background: linear-gradient(112deg, #fff 83%, #f6faff 100%);
   box-shadow: var(--elevation-2), 0 8px 32px #4775f512;
   border-radius: var(--border-radius-lg);
   border: 1.5px solid #ebf4fa;
+  /* Subtle radiant highlight for card elevation */
 }
+
+.btn, .btn-large, .btn-outline, .btn-accent, input, select, textarea {
+  -webkit-tap-highlight-color: transparent;
+  backface-visibility: hidden;
+  /* Touch feedback for mobile */
+}
+
+.btn:hover, .btn-large:hover, .btn-outline:hover, .btn-accent:hover, 
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 2px 30px #4A90E221, 0 1px 8px #50E3C28a !important;
+  filter: brightness(1.08) drop-shadow(0 3px 15px #60eec22c);
+  background-blend-mode: lighten;
+}
+
+/* Soft glassmorphism tap feedback */
+.btn:active, .btn-large:active, .btn-outline:active, .btn-accent:active {
+  background: rgba(80,227,194,0.11) !important;
+  box-shadow: 0 1.7px 8px #4a90e244 !important;
+  filter: blur(0.1px) brightness(0.97);
+}
+
 
 /* Hide native outline but keep focus for accessibility */
 *:focus {

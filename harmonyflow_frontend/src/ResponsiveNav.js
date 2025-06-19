@@ -1,12 +1,12 @@
-import React, { useRef, useState, useLayoutEffect } from "react";
+import React, { useRef, useState, useLayoutEffect, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 /**
  * ResponsiveNav
  *
- * Displays navigation links in a horizontally scrollable container; if there are too many links
- * for the visible width, overflows are collected into a "More" dropdown.
- * Adjusts responsively and keeps navbar visually coherent at any desktop width.
+ * Displays navigation links in a horizontally scrollable container.
+ * If there are too many to fit, overflows are collected into a modern, accessible "More" dropdown.
+ * Handles horizontal scroll and dropdown overflow responsively with premium style and full keyboard accessibility.
  */
 
 // Navigation configuration: label, path, link styles
@@ -88,57 +88,104 @@ const NAV_LINKS = [
 // PUBLIC_INTERFACE
 function ResponsiveNav() {
   const containerRef = useRef();
+  const moreBtnRef = useRef();
+  const moreMenuRef = useRef();
   const [overflowed, setOverflowed] = useState([]);
   const [showMore, setShowMore] = useState(false);
   const [visible, setVisible] = useState(NAV_LINKS.map((_, i) => i));
+  const [lastResize, setLastResize] = useState(Date.now());
   const location = useLocation();
 
-  // Determine which links fit and which must go to "More"
-  useLayoutEffect(() => {
-    const checkOverflow = () => {
-      if (!containerRef.current) return;
+  // Overflow logic, recomputed on size/zoom changes
+  const checkOverflow = useCallback(() => {
+    if (!containerRef.current) return;
 
-      // Get link nodes & container width
-      const children = Array.from(containerRef.current.children).filter(n => n.dataset && n.dataset.index);
-      const containerWidth = containerRef.current.offsetWidth;
-      let used = 0, fit = [], extra = [];
+    // Get link nodes & container width
+    const children = Array.from(containerRef.current.children).filter(n => n.dataset && n.dataset.index);
+    const containerWidth = containerRef.current.offsetWidth;
+    let used = 0, fit = [], extra = [];
 
-      // Fit links until we overflow (reserve space for "More" button if needed)
-      for (let i = 0; i < NAV_LINKS.length; i++) {
-        // For measurement, forcibly show all links, hide More
-        if (children[i]) children[i].style.display = "";
+    // Reset display for measurement: show all links
+    for (let i = 0; i < NAV_LINKS.length; i++) {
+      if (children[i]) children[i].style.display = "";
+    }
+
+    // Always reserve space for 'More' button if some links could overflow
+    const moreBtnWidth =
+      containerRef.current.querySelector(".nav-more-btn")?.offsetWidth
+      || 82; // assume generous width
+
+    for (let i = 0; i < NAV_LINKS.length; i++) {
+      const node = children[i];
+      if (!node) continue;
+      let nodeWidth = node.offsetWidth;
+
+      // Account for margin
+      let margin = 8;
+      if (used + nodeWidth + (extra.length === 0 ? 0 : moreBtnWidth) + margin > containerWidth) {
+        extra.push(i);
+      } else {
+        fit.push(i);
+        used += nodeWidth + margin;
       }
-      const moreBtnWidth = containerRef.current.querySelector(".nav-more-btn")?.offsetWidth || 60;
-
-      for (let i = 0; i < NAV_LINKS.length; i++) {
-        const node = children[i];
-        if (!node) continue;
-        let nodeWidth = node.offsetWidth;
-
-        // Add node, see if still fits in container (minus More dropdown if needed)
-        if (used + nodeWidth + moreBtnWidth > containerWidth) {
-          extra.push(i);
-        } else {
-          fit.push(i);
-          used += nodeWidth;
-        }
-      }
-      setVisible(fit);
-      setOverflowed(extra);
-    };
-
-    checkOverflow();
-    window.addEventListener("resize", checkOverflow);
-    return () => window.removeEventListener("resize", checkOverflow);
+    }
+    setVisible(fit);
+    setOverflowed(extra);
   }, []);
 
-  // Hide More menu on navigation
+  // Run overflow computation on layout and window/zoom/orientation changes
+  useLayoutEffect(() => {
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+    window.addEventListener("orientationchange", checkOverflow);
+
+    // To robustly detect zoom/font size changes, also re-run periodically for a bit after mount
+    const interval = setInterval(() => {
+      setLastResize(Date.now());
+      checkOverflow();
+    }, 1100);
+    setTimeout(() => clearInterval(interval), 3500);
+
+    return () => {
+      window.removeEventListener("resize", checkOverflow);
+      window.removeEventListener("orientationchange", checkOverflow);
+      clearInterval(interval);
+    };
+  }, [checkOverflow]);
+
+  // Hide More dropdown when navigating
   useLayoutEffect(() => {
     setShowMore(false);
   }, [location.pathname]);
 
+  // Keyboard accessibility for the More button/menu
+  function handleMoreKey(e) {
+    if (e.key === "Enter" || e.key === " ") {
+      setShowMore(v => !v);
+    } else if (e.key === "ArrowDown" && showMore && moreMenuRef.current) {
+      // Focus first menu item
+      const links = moreMenuRef.current.querySelectorAll("a,button");
+      if (links[0]) links[0].focus();
+    } else if (e.key === "Escape") {
+      setShowMore(false);
+      if (moreBtnRef.current) moreBtnRef.current.focus();
+    }
+  }
+
+  function handleBlur(e) {
+    // Only close if focus moves outside the dropdown and button
+    setTimeout(() => {
+      if (
+        !containerRef.current.contains(document.activeElement) &&
+        (!moreMenuRef.current || !moreMenuRef.current.contains(document.activeElement))
+      ) {
+        setShowMore(false);
+      }
+    }, 130);
+  }
+
   return (
-    <div className="nav-scroll-container">
+    <div className="nav-scroll-container" style={{ position: "relative" }}>
       <div className="nav-inner" ref={containerRef}>
         {NAV_LINKS.map((nav, idx) => (
           <Link
@@ -156,13 +203,23 @@ function ResponsiveNav() {
             }}
             tabIndex={0}
             aria-current={location.pathname === nav.to ? "page" : undefined}
+            aria-label={nav.label}
             data-index={idx}
           >
             {nav.label}
           </Link>
         ))}
         {overflowed.length > 0 && (
-          <div className="nav-more-btn" tabIndex={0} onClick={() => setShowMore((v) => !v)} onBlur={() => setTimeout(() => setShowMore(false), 180)}
+          <div
+            className="nav-more-btn"
+            ref={moreBtnRef}
+            tabIndex={0}
+            aria-haspopup="true"
+            aria-expanded={showMore}
+            aria-controls="nav-more-menu"
+            onKeyDown={handleMoreKey}
+            onClick={() => setShowMore((v) => !v)}
+            onBlur={handleBlur}
             style={{
               marginLeft: 6,
               display: "inline-flex",
@@ -170,31 +227,42 @@ function ResponsiveNav() {
               background: "linear-gradient(96deg,#4A90E2 70%,#50E3C2 100%)",
               color: "#fff",
               borderRadius: 12,
-              fontWeight: 600,
-              fontSize: "1.07em",
-              minWidth: 68,
-              padding: "11px 17px",
+              fontWeight: 700,
+              fontSize: "1.09em",
+              minWidth: 72,
+              padding: "12px 20px",
               cursor: "pointer",
               position: "relative",
               border: "none",
-              boxShadow: "0 2px 13px #437aff18"
+              boxShadow: "0 2px 13px #437aff18",
+              outline: showMore ? "2.5px solid var(--accent)" : undefined,
+              transition: "box-shadow 0.16s, outline 0.16s"
             }}
           >
-            More ▼
+            <span style={{ marginRight: 6 }}>More</span>
+            <span aria-hidden="true">▼</span>
             {showMore &&
-              <div className="nav-more-menu" style={{
-                position: "absolute",
-                top: "120%",
-                right: 0,
-                zIndex: 999,
-                background: "#fff",
-                boxShadow: "0 8px 32px #4A90E244",
-                borderRadius: 12,
-                minWidth: 190,
-                border: "1.2px solid #e0eafe",
-                padding: "9px 0",
-                marginTop: 5
-              }}>
+              <div
+                ref={moreMenuRef}
+                id="nav-more-menu"
+                className="nav-more-menu"
+                role="menu"
+                style={{
+                  position: "absolute",
+                  top: "120%",
+                  right: 0,
+                  zIndex: 999,
+                  background: "#fff",
+                  boxShadow: "0 8px 37px #4A90E244",
+                  borderRadius: 14,
+                  minWidth: 196,
+                  maxWidth: 244,
+                  border: "1.4px solid #e0eafe",
+                  padding: "9px 0",
+                  marginTop: 6,
+                  outline: "none"
+                }}
+              >
                 {overflowed.map(idx => {
                   const nav = NAV_LINKS[idx];
                   return (
@@ -212,13 +280,18 @@ function ResponsiveNav() {
                         boxShadow: "none",
                         border: "none",
                         borderRadius: 0,
-                        padding: "11px 20px",
+                        padding: "12px 18px",
                         margin: 0,
                         fontWeight: 600,
-                        minWidth: "unset"
+                        fontSize: "1.07em",
+                        minWidth: "unset",
+                        outline: "none"
                       }}
                       tabIndex={0}
+                      role="menuitem"
                       aria-current={location.pathname === nav.to ? "page" : undefined}
+                      aria-label={nav.label}
+                      onClick={() => setShowMore(false)}
                     >
                       {nav.label}
                     </Link>
